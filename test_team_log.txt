@@ -66,8 +66,8 @@ Bold Nature
 -  Protect
 
 
-teamend-----
-Opponent's Team:
+teamend-
+Opponents Team:
 Pelipper @ Focus Sash
 Ability: Drizzle
 Tera Type: Steel
@@ -131,8 +131,8 @@ Sassy Nature
 -  Protect
 
 
-teamend-----
+teamend-
 Notes:
 This is a test match. It will be saved and loaded again.
 
- -----
+>-----<

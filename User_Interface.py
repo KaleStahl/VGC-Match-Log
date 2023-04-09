@@ -4,7 +4,7 @@ User_Interface.py.
 Class to manage interaction with user interface.
 
 Author: Kale Stahl
-Last Modified: 3/16/2023
+Last Modified: 4/8/2023
 
 """
 import tkinter as tk
@@ -50,16 +50,27 @@ class Application:
         """
         x = 0
 
+    def uxReadMe(self):
+        from os import startfile
+        startfile("README.txt")
+
+    def uxGithub(self):
+        import webbrowser
+        webbrowser.open_new("https://github.com/KaleStahl/VGC-Match-Log.git")
+
     def uxOpenFile(self):
         path = askopenfilename()
         matchHelp = Match.Match(None, None, None, None, None)
         self._MatchLog = matchHelp.readMatch(path)
+        print(self._MatchLog)
         for match in self._MatchLog:
             self._MatchName.append(match.name)
             self._TeamName.append(match.teamName)
             self._Team.append(match.team)
-        self.updateListbox(self._matchSelect, self._MatchName)
         self.updateListbox(self._teamSelect, self._TeamName)
+        self._teamSelect.select_set(0)
+        self.updateListbox(self._matchSelect, self._MatchName)
+        self._matchSelect.select_set(0)
 
     def uxSaveFile(self):
         file = asksaveasfile(title="Select Location", filetypes=(("Text Files", "*.txt"),))
@@ -104,8 +115,8 @@ class Application:
 
         # Initializes help menu bar
         self._helpMenu = tk.Menu(self._menuBar, tearoff=0)
-        self._helpMenu.add_command(label="ReadMe", command=self.donothing)
-        self._helpMenu.add_command(label="GitHub", command=self.donothing)
+        self._helpMenu.add_command(label="ReadMe", command=self.uxReadMe)
+        self._helpMenu.add_command(label="GitHub", command=self.uxGithub)
         self._menuBar.add_cascade(label="Help", menu=self._helpMenu)
         root.config(menu=self._menuBar)
 
@@ -326,7 +337,7 @@ class Application:
 
         ## Adds textbox to select opponents team
         oppTeamFrame = tk.Frame(newWindow)
-        oppTeamFrame.grid(row = 0, column = 1, rowspan = 2)
+        oppTeamFrame.grid(row = 0, column = 1, rowspan = 1)
         tk.Label(oppTeamFrame, text ="Opponents Team:").pack()
         PokePaste = tk.Text(oppTeamFrame)
         PokePaste.pack(side = 'left',fill = 'y' )
@@ -401,12 +412,13 @@ class Application:
             matchGood = False
             tk.messagebox.showerror('Duplicate Match Name', 'Error: You already have a match with that name. Please select another name.')
             window.lift()
-        teamName = teamSelect.get(teamSelect.curselection())
-        team = self._Team[self._TeamName.index(teamName)]
-        if(teamName == "" or teamName == None):
+        teamUsed = teamSelect.curselection()
+        if(teamUsed == "" or teamUsed == []):
             matchGood = False
             tk.messagebox.showerror('No Team Error', 'Error: You must select a match.')
             window.lift()
+        teamName = teamSelect.get(teamUsed)
+        team = self._Team[self._TeamName.index(teamName)]
         if(oppTeamBox.get("1.0",tk.END) == "" or oppTeamBox.get("1.0",tk.END) == None):
             matchGood = False
             tk.messagebox.showerror('No Opposing Team Error', 'Error: You must enter the opposing team.')
@@ -470,7 +482,6 @@ class Application:
         # Adds delete team button
         deleteMatchButton = tk.Button(newWindow, text='Delete Match', command = lambda:self.deleteMatch(newWindow, matchToDelete.get(matchToDelete.curselection())))
         deleteMatchButton.pack()
-        return
 
     def deleteMatch(self, window, name):
         """
@@ -544,14 +555,14 @@ class Application:
         notes.config(state=tk.DISABLED)
         notes.pack()
 
-        changesFrame = tk.Frame(frame)
-        changeText ="Changes: \n" + match.getChanges(self._Team[0].pokemon)
-        tk.Label(changesFrame, text = changeText ).pack()
+        # changesFrame = tk.Frame(frame)
+        # changeText ="Changes: \n" + match.getChanges(self._Team[0].pokemon)
+        # tk.Label(changesFrame, text = changeText ).pack()
 
         teamFrame.grid(row = 0, column = 0)
         notesFrame.grid(row = 2, column = 0)
         oppTeamFrame.grid(row = 1, column = 0)
-        changesFrame.grid(row = 0, column = 1, rowspan = 3)
+        # changesFrame.grid(row = 0, column = 1, rowspan = 3)
 
     def checkMatch(self, event):
         """

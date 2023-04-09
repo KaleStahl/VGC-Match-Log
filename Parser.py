@@ -243,9 +243,10 @@ class Parser:
         team = []
         cur_poke = Pokemon.Pokemon("","", "","", [], [], "","","", [])
         fileinput.close()
-        for line in fileinput.input(pasteLocation):
+        fileIn = fileinput.input(pasteLocation)
+        for line in fileIn:
             line.rstrip()
-            if(line.find("teamend-----") != -1):
+            if(line.find("teamend-") != -1):
                 break
             if(pokemon_count < 6):
                 if(line.find("(") != -1 or line.find("@") != -1):
@@ -292,5 +293,6 @@ class Parser:
                 team.append(cur_poke)
                 break
         team.append(cur_poke)
-        fileinput.close()
+        fileIn.close()
+        # print(self.makeTeam(team))
         return self.makeTeam(team)

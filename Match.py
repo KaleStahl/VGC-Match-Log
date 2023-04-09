@@ -4,7 +4,7 @@ Match.py.
 Pokemon class to create a match with Pokepaste data and notes.
 
 Author: Kale Stahl
-Last Modified: 3/16/2023
+Last Modified: 4/8/2023
 
 """
 import fileinput
@@ -55,11 +55,11 @@ class Match:
         paste += "Match Name: {} \n".format(self.name)
         paste += "Team Name: {} \n".format(self.teamName)
         paste += "Team Used: \n"
-        paste += str(self.team )+ "\nteamend----- \n"
-        paste += "Opponent's Team: \n"
-        paste += str(self.oppTeam )+ "\nteamend----- \n"
+        paste += str(self.team)+ "\n-teamend-\n\n"
+        paste += "Opponents Team: \n"
+        paste += str(self.oppTeam)+ "\n-teamend-\n\n"
         paste += "Notes: \n"
-        paste += self.notes + "\n ----- \n"
+        paste += self.notes + "\n\n>-----<\n\n"
         return paste
 
     def readMatch(self, matchFile):
@@ -81,44 +81,55 @@ class Match:
         match = Match("", "", None, None, "")
 
         # Copies match data to new file
-        FileName = 'temp_files/temp_match_list.txt'
-        with open(matchFile,'r') as firstfile, open(FileName,'a') as secondfile:
+        tempFile = 'temp_files/temp_match_list.txt'
+        with open(matchFile,'r') as firstfile, open(tempFile,'a') as secondfile:
             for line in firstfile:
                  secondfile.write(line)
 
         fileinput.close()
-        parser = Parser.Parser()
-        for line in fileinput.input(matchFile):
+        fileIn = open(matchFile)
+        notesBlock = False
+        for line in fileIn:
             line.rstrip()
             if(line.find("Match Name:") != -1):
-                match.name = line[line.find(": "):-1].rstrip().lstrip()
+                match.name = line[line.find(": ")+1:].rstrip().lstrip()
             if(line.find("Team Name:") != -1):
-                match.teamName = line[line.find(": "):-1].rstrip().lstrip()
+                match.teamName = line[line.find(": ")+1:].rstrip().lstrip()
             if(line.find("Team Used:") != -1):
-                parser = Parser.Parser()
-                match.team = parser.parse(FileName)
-                teamFile = open(FileName, 'r')
+                parser1 = Parser.Parser()
+                match.team = parser1.parse(tempFile)
+                print(str(match.team))
+                teamFile = open(tempFile, 'r')
                 teamString = teamFile.read()
                 teamFile.close()
-                print(teamString.index("teamend-----")-1)
-                removeTeam = teamString[teamString.index("teamend-----"), -1]
-                teamFile = open(FileName, 'w')
+                removeTeam = teamString[teamString.index("teamend-")+7:-1].rstrip().lstrip()
+                # print(removeTeam)
+                teamFile = open(tempFile, 'w')
                 teamFile.write(removeTeam)
                 teamFile.close()
-            if(line.find("Opponent's Team:") != -1):
-                match.oppTeam = parser.parse(FileName)
-                teamOppFile = open(FileName, 'a')
-                teamOppString = teamFile.read()
-                removeOppTeam = teamOppString[teamOppString.index("teamend-----"), -1]
+            if(line.find("Opponents Team:") != -1):
+                # print("Starting OppTeam Parse")
+                parser2 = Parser.Parser()
+                match.oppTeam = parser2.parse(tempFile)
+                # print("OppTeam + " + match.oppTeam)
+                teamOppFile = open(tempFile, 'r')
+                teamOppString = teamOppFile.read()
+                removeOppTeam = teamOppString[teamOppString.index("teamend-")+7: -1]
+                teamOppFile = open(tempFile, 'w')
                 teamOppFile.write(removeOppTeam)
                 teamOppFile.close()
-            if(line.find("-----") != -1):
+            if(line.find(">-----<") != -1):
+                # print(match)
                 matchList.append(match)
                 del match
                 match = Match("", "", None, None, "")
-
+                notesBlock = False
+            if(notesBlock == True):
+                match.notes += line
+            if(line.find("Notes:") != -1):
+                notesBlock = True
         # Clears temp file
-        teamFile = open(FileName, 'w')
+        teamFile = open(tempFile, 'w')
         teamFile.write("")
         teamFile.close()
         fileinput.close()
