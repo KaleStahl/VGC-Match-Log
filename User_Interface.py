@@ -39,17 +39,6 @@ class Application:
     def __init__(self, ux):
         self._ux = ux
 
-    def donothing(self):
-        """
-        Do nothing.
-
-        Returns
-        -------
-        None.
-
-        """
-        x = 0
-
     def uxReadMe(self):
         from os import startfile
         startfile("README.txt")
@@ -62,7 +51,6 @@ class Application:
         path = askopenfilename()
         matchHelp = Match.Match(None, None, None, None, None)
         self._MatchLog = matchHelp.readMatch(path)
-        print(self._MatchLog)
         for match in self._MatchLog:
             self._MatchName.append(match.name)
             self._TeamName.append(match.teamName)
@@ -71,6 +59,9 @@ class Application:
         self._teamSelect.select_set(0)
         self.updateListbox(self._matchSelect, self._MatchName)
         self._matchSelect.select_set(0)
+        self._deleteMatchButton.config(state =tk.NORMAL)
+        self._deleteTeamButton.config(state =tk.NORMAL)
+        self._newMatchButton.config(state =tk.NORMAL)
 
     def uxSaveFile(self):
         file = asksaveasfile(title="Select Location", filetypes=(("Text Files", "*.txt"),))
@@ -88,7 +79,7 @@ class Application:
         self.updateListbox(self._matchSelect, self._MatchName)
         self.updateListbox(self._teamSelect, self._TeamName)
 
-    def uxFileMenu(self,root):
+    def uxFileMenu(self, root):
         """
         Generate the file menu at the top of the application.
 
@@ -544,7 +535,7 @@ class Application:
         tk.Label(teamFrame, text = "Team Used: " + match.teamName).pack()
 
         oppTeamFrame = tk.Frame(frame)
-        tk.Label(oppTeamFrame, text = "Opponent's Team:").pack()
+        tk.Label(oppTeamFrame, text = "Opponent's Team:\n").pack()
         self.displayPokePaste(oppTeamFrame, match.oppTeam)
 
         notesFrame = tk.Frame(frame)
@@ -767,14 +758,30 @@ class Application:
 
         for i in range(6):
             pokeframe = tk.Frame(frame)
+            pokeframe.columnconfigure(0, weight = 1)
+            pokeframe.columnconfigure(1, weight = 4)
             col = i % 2
             row = math.floor(i/2)
             if(i < len(team.pokemon)):
                 poke = tk.Label(pokeframe, text = str(team.pokemon[i]),anchor = "w", justify = "left")
+                from pathlib import Path
+                from PIL import Image, ImageTk
+                spritePath = "sprites/" +str(team.pokemon[i].name).replace(" ", "-")+ ".png"
+                my_file = Path(spritePath)
+                if my_file.is_file():
+                    pic = Image.open(spritePath)
+                    resize = pic.resize((50, 50),Image.ANTIALIAS)
+                    img = ImageTk.PhotoImage(resize)
+                    imageLab = tk.Label(pokeframe, image = img, anchor = tk.CENTER)
+                    imageLab.image = img
+                else:
+                    imageLab = tk.Label(pokeframe, text = "[No Image]", anchor = tk.CENTER)
+                imageLab.grid(column = 0, sticky = tk.EW)
             else:
-                poke = tk.Label(pokeframe, text = "", anchor = "w", justify = "left")
-            poke.pack(side = "left", fill="both", expand=True)
-            pokeframe.grid(column = col, row = row, sticky = "w")
+                poke = tk.Label(pokeframe, text = "", anchor = "NW", justify = "left")
+            poke.grid(column = 1, sticky = tk.EW)
+            #poke.pack(side = "left", fill="both", expand=True)
+            pokeframe.grid(column = col, row = row, sticky = tk.NS)
 
     def uxInitialize(self, root):
         """

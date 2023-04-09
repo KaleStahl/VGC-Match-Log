@@ -98,20 +98,16 @@ class Match:
             if(line.find("Team Used:") != -1):
                 parser1 = Parser.Parser()
                 match.team = parser1.parse(tempFile)
-                print(str(match.team))
                 teamFile = open(tempFile, 'r')
                 teamString = teamFile.read()
                 teamFile.close()
                 removeTeam = teamString[teamString.index("teamend-")+7:-1].rstrip().lstrip()
-                # print(removeTeam)
                 teamFile = open(tempFile, 'w')
                 teamFile.write(removeTeam)
                 teamFile.close()
             if(line.find("Opponents Team:") != -1):
-                # print("Starting OppTeam Parse")
                 parser2 = Parser.Parser()
                 match.oppTeam = parser2.parse(tempFile)
-                # print("OppTeam + " + match.oppTeam)
                 teamOppFile = open(tempFile, 'r')
                 teamOppString = teamOppFile.read()
                 removeOppTeam = teamOppString[teamOppString.index("teamend-")+7: -1]
@@ -119,7 +115,6 @@ class Match:
                 teamOppFile.write(removeOppTeam)
                 teamOppFile.close()
             if(line.find(">-----<") != -1):
-                # print(match)
                 matchList.append(match)
                 del match
                 match = Match("", "", None, None, "")
