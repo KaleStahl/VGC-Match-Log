@@ -40,44 +40,93 @@ class Application:
         self._ux = ux
 
     def uxReadMe(self):
+        """
+        Event handler for README menu bar item.
+
+        Returns
+        -------
+        None.
+
+        """
         from os import startfile
         startfile("README.txt")
 
     def uxGithub(self):
+        """
+        Event handler for GitHub menu bar item.
+
+        Returns
+        -------
+        None.
+
+        """
         import webbrowser
         webbrowser.open_new("https://github.com/KaleStahl/VGC-Match-Log.git")
 
     def uxOpenFile(self):
-        path = askopenfilename()
-        matchHelp = Match.Match(None, None, None, None, None)
-        self._MatchLog = matchHelp.readMatch(path)
-        for match in self._MatchLog:
-            self._MatchName.append(match.name)
-            self._TeamName.append(match.teamName)
-            self._Team.append(match.team)
-        self.updateListbox(self._teamSelect, self._TeamName)
-        self._teamSelect.select_set(0)
-        self.updateListbox(self._matchSelect, self._MatchName)
-        self._matchSelect.select_set(0)
-        self._deleteMatchButton.config(state =tk.NORMAL)
-        self._deleteTeamButton.config(state =tk.NORMAL)
-        self._newMatchButton.config(state =tk.NORMAL)
+        """
+        Event handler for Open Team Log menu bar item.
+
+        Returns
+        -------
+        None.
+
+        """
+        try:
+            path = askopenfilename()
+            matchHelp = Match.Match(None, None, None, None, None)
+            self._MatchLog = matchHelp.readMatch(path)
+            for match in self._MatchLog:
+                self._MatchName.append(match.name)
+                self._TeamName.append(match.teamName)
+                self._Team.append(match.team)
+            self.updateListbox(self._teamSelect, self._TeamName)
+            self._teamSelect.select_set(0)
+            self.updateListbox(self._matchSelect, self._MatchName)
+            self._matchSelect.select_set(0)
+            self._deleteMatchButton.config(state =tk.NORMAL)
+            self._deleteTeamButton.config(state =tk.NORMAL)
+            self._newMatchButton.config(state =tk.NORMAL)
+        except Exception as e:
+            tk.messagebox.showerror('Open Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
     def uxSaveFile(self):
-        file = asksaveasfile(title="Select Location", filetypes=(("Text Files", "*.txt"),))
-        text2save = ""
-        for match in self._MatchLog:
-            text2save += str(match)
-        file.write(text2save)
-        file.close()
+        """
+        Event handler for Save Team Log menu bar item.
+
+        Returns
+        -------
+        None.
+
+        """
+        try:
+            file = asksaveasfile(title="Select Location", filetypes=(("Text Files", "*.txt"),))
+            text2save = ""
+            for match in self._MatchLog:
+                text2save += str(match)
+            file.write(text2save)
+            file.close()
+        except Exception as e:
+            tk.messagebox.showerror('Save Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
     def uxNewFile(self):
-        self._MatchLog = []
-        self._MatchName = []
-        self._Team = []
-        self._TeamName = []
-        self.updateListbox(self._matchSelect, self._MatchName)
-        self.updateListbox(self._teamSelect, self._TeamName)
+        """
+        Event handler for New Team Log menu bar item.
+
+        Returns
+        -------
+        None.
+
+        """
+        try:
+            self._MatchLog = []
+            self._MatchName = []
+            self._Team = []
+            self._TeamName = []
+            self.updateListbox(self._matchSelect, self._MatchName)
+            self.updateListbox(self._teamSelect, self._TeamName)
+        except Exception as e:
+            tk.messagebox.showerror('New Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
     def uxFileMenu(self, root):
         """
