@@ -4,7 +4,7 @@ User_Interface.py.
 Class to manage interaction with user interface.
 
 Author: Kale Stahl
-Last Modified: 4/8/2023
+Last Modified: 4/10/2023
 
 """
 import tkinter as tk
@@ -106,7 +106,7 @@ class Application:
 
         # Initializes help menu bar
         self._helpMenu = tk.Menu(self._menuBar, tearoff=0)
-        self._helpMenu.add_command(label="ReadMe", command=self.uxReadMe)
+        self._helpMenu.add_command(label="README", command=self.uxReadMe)
         self._helpMenu.add_command(label="GitHub", command=self.uxGithub)
         self._menuBar.add_cascade(label="Help", menu=self._helpMenu)
         root.config(menu=self._menuBar)
@@ -758,6 +758,9 @@ class Application:
 
         for i in range(6):
             pokeframe = tk.Frame(frame)
+            pokeframe.rowconfigure(0, weight = 1)
+            pokeframe.rowconfigure(1, weight = 1)
+            pokeframe.rowconfigure(2, weight = 1)
             pokeframe.columnconfigure(0, weight = 1)
             pokeframe.columnconfigure(1, weight = 4)
             col = i % 2
@@ -766,20 +769,48 @@ class Application:
                 poke = tk.Label(pokeframe, text = str(team.pokemon[i]),anchor = "w", justify = "left")
                 from pathlib import Path
                 from PIL import Image, ImageTk
+                #add sprite image
                 spritePath = "sprites/" +str(team.pokemon[i].name).replace(" ", "-")+ ".png"
                 my_file = Path(spritePath)
                 if my_file.is_file():
                     pic = Image.open(spritePath)
-                    resize = pic.resize((50, 50),Image.ANTIALIAS)
+                    resize = pic.resize((60, 60),Image.ANTIALIAS)
                     img = ImageTk.PhotoImage(resize)
-                    imageLab = tk.Label(pokeframe, image = img, anchor = tk.CENTER)
+                    imageLab = tk.Label(pokeframe, image = img)
                     imageLab.image = img
                 else:
-                    imageLab = tk.Label(pokeframe, text = "[No Image]", anchor = tk.CENTER)
-                imageLab.grid(column = 0, sticky = tk.EW)
+                    imageLab = tk.Label(pokeframe, text = "[No Image]")
+                imageLab.grid(row = 0, column = 0)
+
+                #add item image
+                itemPath = "items/" +str(team.pokemon[i].item).replace(" ", "-")+ ".png"
+                my_file = Path(itemPath)
+                if my_file.is_file():
+                    pic = Image.open(itemPath)
+                    resize = pic.resize((20, 20),Image.ANTIALIAS)
+                    imgItem = ImageTk.PhotoImage(resize)
+                    itemLab = tk.Label(pokeframe, image = imgItem)
+                    itemLab.image = imgItem
+                else:
+                    itemLab = tk.Label(pokeframe, text = "[No Image]")
+                itemLab.grid(row = 2, column = 0, sticky = tk.N)
+
+                #add tera image
+                teraPath = "tera_types/" +str(team.pokemon[i].tera)+ ".png"
+                my_file = Path(teraPath)
+                if my_file.is_file():
+                    pic = Image.open(teraPath)
+                    resize = pic.resize((60, 15),Image.ANTIALIAS)
+                    imgTera = ImageTk.PhotoImage(resize)
+                    teraLab = tk.Label(pokeframe, image = imgTera)
+                    teraLab.image = imgTera
+                else:
+                    teraLab = tk.Label(pokeframe, text = "[No Image]")
+                teraLab.grid(row = 1, column = 0, sticky = tk.N)
+
             else:
-                poke = tk.Label(pokeframe, text = "", anchor = "NW", justify = "left")
-            poke.grid(column = 1, sticky = tk.EW)
+                poke = tk.Label(pokeframe, text = "", anchor = "w", justify = "left")
+            poke.grid(row = 0, column = 1, sticky = tk.NW, rowspan = 3)
             #poke.pack(side = "left", fill="both", expand=True)
             pokeframe.grid(column = col, row = row, sticky = tk.NS)
 
