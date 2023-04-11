@@ -8,6 +8,7 @@ Last Modified: 4/10/2023
 
 """
 import tkinter as tk
+from tkinter import ttk
 import Parser
 import Match
 from tkinter.filedialog import asksaveasfile, askopenfilename
@@ -73,8 +74,17 @@ class Application:
 
         """
         try:
+            if(len(self._MatchName) != 0):
+                response = tk.messagebox.askyesnocancel("Save Progress", "Would you like to save your current match log?", icon ='question')
+                if(response == True):
+                    self.uxSaveFile()
+                elif(response == None):
+                    return
             path = askopenfilename()
             matchHelp = Match.Match(None, None, None, None, None)
+            self._MatchName.clear()
+            self._TeamName.clear()
+            self._Team.clear()
             self._MatchLog = matchHelp.readMatch(path)
             for match in self._MatchLog:
                 self._MatchName.append(match.name)
@@ -119,6 +129,12 @@ class Application:
 
         """
         try:
+            if(len(self._MatchName) != 0):
+                response = tk.messagebox.askyesnocancel("Save Progress", "Would you like to save your current match log?", icon ='question')
+                if(response == True):
+                    self.uxSaveFile()
+                elif(response == None):
+                    return
             self._MatchLog = []
             self._MatchName = []
             self._Team = []
@@ -220,9 +236,11 @@ class Application:
         if(teamName == ""):
             tk.messagebox.showerror('No Team Name', 'Error: Your team must have a name.')
             window.lift()
-        if(box.get("1.0",tk.END) == ""):
+            return
+        if(box.get("1.0",tk.END).lstrip().rstrip() == ""):
             tk.messagebox.showerror('No Team', 'Error: No team was entered.')
             window.lift()
+            return
         dupeName = False
         for name in self._TeamName:
             if(teamName == name):
@@ -230,6 +248,7 @@ class Application:
         if(dupeName == True):
             tk.messagebox.showerror('Duplicate Team Name', 'Error: You already have a team with that name. Please select another name.')
             window.lift()
+            return
         else:
             try:
                 # Writes team to file and parses, then deletes file contents
@@ -442,27 +461,34 @@ class Application:
         name = nameBox.get()
         if(name == "" or name == None):
             matchGood = False
-            tk.messagebox.showerror('Match Name Error', 'Error: Your match must have a name.')
+            tk.messagebox.showerror('No Match Name', 'Your match must have a name.')
             window.lift()
+            return
         dupeName = False
         for matchName in self._MatchName:
             if(matchName == name):
                 dupeName = True
         if(dupeName == True):
             matchGood = False
-            tk.messagebox.showerror('Duplicate Match Name', 'Error: You already have a match with that name. Please select another name.')
             window.lift()
+            tk.messagebox.showerror('Duplicate Match Name', 'You already have a match with that name. Please select another name.')
+            window.lift()
+            return
         teamUsed = teamSelect.curselection()
         if(teamUsed == "" or teamUsed == []):
             matchGood = False
-            tk.messagebox.showerror('No Team Error', 'Error: You must select a match.')
             window.lift()
+            tk.messagebox.showerror('No Team', 'You must select a team used.')
+            window.lift()
+            return
         teamName = teamSelect.get(teamUsed)
         team = self._Team[self._TeamName.index(teamName)]
-        if(oppTeamBox.get("1.0",tk.END) == "" or oppTeamBox.get("1.0",tk.END) == None):
+        if(oppTeamBox.get("1.0",tk.END).lstrip().rstrip() == "" or oppTeamBox.get("1.0",tk.END) == None):
             matchGood = False
-            tk.messagebox.showerror('No Opposing Team Error', 'Error: You must enter the opposing team.')
             window.lift()
+            tk.messagebox.showerror('No Opposing Team', 'You must enter the opposing team.')
+            window.lift()
+            return
         if(matchGood == True):
             try:
                 # Parses given opponents team
@@ -485,7 +511,7 @@ class Application:
                 self._deleteMatchButton.config(state =tk.NORMAL)
                 window.destroy()
             except Exception as e:
-                tk.messagebox.showerror('New Match Error', 'Error: There was an error adding your match. \nError Code: ' + str(e))
+                tk.messagebox.showerror('New Match Error', 'There was an error adding your match. \nError Code: ' + str(e))
                 window.lift()
 
     def uxDeleteMatch(self):
@@ -540,7 +566,7 @@ class Application:
 
         """
         if(self._MatchName == []):
-            tk.messagebox.showerror('Delete Match Error', 'Error: There is no match to delete.')
+            tk.messagebox.showerror('No Match', 'There is no match to delete.')
             window.lift()
         else:
             try:
@@ -574,35 +600,31 @@ class Application:
         #Clears frame
         for widget in frame.winfo_children():
             widget.destroy()
-        frame.columnconfigure(0, weight = 2)
-        frame.columnconfigure(1, weight = 2)
-        frame.rowconfigure(0, weight = 1)
-        frame.rowconfigure(1, weight = 12)
-        frame.rowconfigure(2, weight = 4)
+        #frame.columnconfigure(0, weight = 1)
+        frame.rowconfigure(0, weight = 2)
+        frame.rowconfigure(1, weight = 1)
+        frame.rowconfigure(2, weight = 1)
+        frame.rowconfigure(3, weight = 12)
+        frame.rowconfigure(4, weight = 1)
+        frame.rowconfigure(5, weight = 4)
 
-        teamFrame = tk.Frame(frame)
-        tk.Label(teamFrame, text = "Team Used: " + match.teamName).pack()
+        tk.Label(frame, text = "Matches").grid(column = 0, row = 0)
+
+        tk.Label(frame, text = "Team Used: " + match.teamName).grid(column = 0, row = 1)
+
+        tk.Label(frame, text = "Opponent's Team:").grid(column = 0, row = 2)
 
         oppTeamFrame = tk.Frame(frame)
-        tk.Label(oppTeamFrame, text = "Opponent's Team:\n").pack()
         self.displayPokePaste(oppTeamFrame, match.oppTeam)
+        oppTeamFrame.grid(column = 0, row = 3)
 
-        notesFrame = tk.Frame(frame)
-        tk.Label(notesFrame, text = "Notes:").pack()
-        notes = tk.Text(notesFrame, height = 5, width = 50)
+        tk.Label(frame, text = "Notes:").grid(column = 0, row = 4)
+
+        notes = tk.Text(frame, height = 5, width = 50)
         notes.delete(1.0, tk.END)
         notes.insert(tk.END, match.notes)
         notes.config(state=tk.DISABLED)
-        notes.pack()
-
-        # changesFrame = tk.Frame(frame)
-        # changeText ="Changes: \n" + match.getChanges(self._Team[0].pokemon)
-        # tk.Label(changesFrame, text = changeText ).pack()
-
-        teamFrame.grid(row = 0, column = 0)
-        notesFrame.grid(row = 2, column = 0)
-        oppTeamFrame.grid(row = 1, column = 0)
-        # changesFrame.grid(row = 0, column = 1, rowspan = 3)
+        notes.grid(column = 0, row = 5)
 
     def checkMatch(self, event):
         """
@@ -804,7 +826,6 @@ class Application:
             frame.grid_columnconfigure(col, minsize=50)
         for row in range(row_count):
             frame.grid_rowconfigure(row, minsize=50)
-
         for i in range(6):
             pokeframe = tk.Frame(frame)
             pokeframe.rowconfigure(0, weight = 1)
@@ -823,7 +844,7 @@ class Application:
                 my_file = Path(spritePath)
                 if my_file.is_file():
                     pic = Image.open(spritePath)
-                    resize = pic.resize((60, 60),Image.ANTIALIAS)
+                    resize = pic.resize((60, 60),Image.LANCZOS)
                     img = ImageTk.PhotoImage(resize)
                     imageLab = tk.Label(pokeframe, image = img)
                     imageLab.image = img
@@ -836,7 +857,7 @@ class Application:
                 my_file = Path(itemPath)
                 if my_file.is_file():
                     pic = Image.open(itemPath)
-                    resize = pic.resize((20, 20),Image.ANTIALIAS)
+                    resize = pic.resize((20, 20),Image.LANCZOS)
                     imgItem = ImageTk.PhotoImage(resize)
                     itemLab = tk.Label(pokeframe, image = imgItem)
                     itemLab.image = imgItem
@@ -849,7 +870,7 @@ class Application:
                 my_file = Path(teraPath)
                 if my_file.is_file():
                     pic = Image.open(teraPath)
-                    resize = pic.resize((60, 15),Image.ANTIALIAS)
+                    resize = pic.resize((60, 15),Image.LANCZOS)
                     imgTera = ImageTk.PhotoImage(resize)
                     teraLab = tk.Label(pokeframe, image = imgTera)
                     teraLab.image = imgTera
@@ -860,7 +881,6 @@ class Application:
             else:
                 poke = tk.Label(pokeframe, text = "", anchor = "w", justify = "left")
             poke.grid(row = 0, column = 1, sticky = tk.NW, rowspan = 3)
-            #poke.pack(side = "left", fill="both", expand=True)
             pokeframe.grid(column = col, row = row, sticky = tk.NS)
 
     def uxInitialize(self, root):

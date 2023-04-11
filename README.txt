@@ -34,7 +34,15 @@ best course of action, you can send an email to kalestahl[at]gmail.com.
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change. If you have specific questions about my
-code, you can send an email to kalestahl[at]gmail.com.
+code or would like to work with me directly, you can send an email to kalestahl[at]gmail.com.
+
+# CREDITS #
+Original concept came from twitter user @NikyuAlex and their spreadsheet found here:
+https://twitter.com/NikyuAlex/status/1630979632294920195
+All Pokemon Sprite images from PokemonDB.net.
+All item images from Aby Zab's google drive:
+https://drive.google.com/drive/folders/1rPpIzyWRidSKoAwQyWwiVg9hTyjU-8r3
+All Tera-type images from previous spreadsheet.
 
 # LICENSE #
 
