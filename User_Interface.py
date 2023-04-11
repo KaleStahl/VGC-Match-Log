@@ -81,6 +81,8 @@ class Application:
                 elif(response == None):
                     return
             path = askopenfilename()
+            if not path:
+                return
             matchHelp = Match.Match(None, None, None, None, None)
             self._MatchName.clear()
             self._TeamName.clear()
@@ -111,6 +113,8 @@ class Application:
         """
         try:
             file = asksaveasfile(title="Select Location", filetypes=(("Text Files", "*.txt"),))
+            if not file:
+                return
             text2save = ""
             for match in self._MatchLog:
                 text2save += str(match)
@@ -144,6 +148,15 @@ class Application:
         except Exception as e:
             tk.messagebox.showerror('New Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
+    def uxExportOpponentsTeams(self):
+        return
+
+    def uxExportTeams(self):
+        return
+
+    def uxGeneratePokepaste(self):
+        return
+
     def uxFileMenu(self, root):
         """
         Generate the file menu at the top of the application.
@@ -168,6 +181,14 @@ class Application:
         self._fileMenu.add_separator()
         self._fileMenu.add_command(label="Exit", command=root.destroy)
         self._menuBar.add_cascade(label="File", menu=self._fileMenu)
+
+        #Create Pokepaste menu bar
+        self._fileMenu = tk.Menu(self._menuBar, tearoff=0)
+        self._fileMenu.add_command(label="Generate PokePaste", command=self.uxGeneratePokepaste)
+        self._fileMenu.add_separator()
+        self._fileMenu.add_command(label="Export Teams", command=self.uxExportTeams)
+        self._fileMenu.add_command(label="Export Opponent's Teams", command=self.uxExportOpponentsTeams)
+        self._menuBar.add_cascade(label="PokePaste", menu=self._fileMenu)
 
         # Initializes help menu bar
         self._helpMenu = tk.Menu(self._menuBar, tearoff=0)
