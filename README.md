@@ -3,61 +3,62 @@
 
 VGC Team Logger is a Python application for tracking matches and changes made to a team after.
 
-# Installation
+## Installation
 
 
-# Usage
+## Usage
 
-To use this program, simply execute the .exe file and the GUI will begin.
+To use this program, simply execute the .exe file and the GUI will begin. Specific aspects of the GUI will be shown below:
 
-## Menu Bar
-### File
-#### New Team Log
+### Menu Bar
+#### File
+##### New Team Log
 - Clears current team log and makes a new blank team log.
 - This will delete all of your current teams and matches.
 - If you have any open matches, it will first prompt to save.
-#### Open Team Log
+##### Open Team Log
 - Opens a previously saved team log.
 - This program can only open files created by this program.
 - If you have any open matches, it will first prompt to save.
-#### Save Team Log
+##### Save Team Log
 - Saves your current team log as a specially formatted .txt file.
-#### Exit
+- This text file can be read by this application, but not Showdown.
+##### Exit
 - Closes the application.
 
-### PokePaste
-#### Generate PokePaste
+#### PokePaste
+##### Generate PokePaste
 - Opens a window that allows you to enter Pokemon data.
 - "Generate" button will generate a PokePaste readable by both this program and Showdown.
-#### Export Teams
+##### Export Teams
 - Opens a window with a text paste of all teams entered through the "add team" button.
 - This paste will be readable by Showdown, but not this application.
-#### Export Opponent's Teams
+##### Export Opponent's Teams
 - Opens a window with a text paste of all opponent's teams entered through the "new match" button.
 - This paste will be readable by Showdown, but not this application.
-### Help
-#### README
+#### Help
+##### README
 - Opens this "README.txt" document in your default application.
-#### GitHub
+##### GitHub
 - Opens the url to the Github Repo for this project in your default browser.
 
-## Direct Interface
-### Team Pane
-### Match Pane
+### Direct Interface
+#### Team Pane
+#### Match Pane
 
-# Support
+## Support
 
 If you have any issues, check the GitHub repo for updates. If the problem is not fixed there,
 please open an issue on the repo. If these issues are not fixed and you feel reaching out to me directly is the
 best course of action, you can send an email to kalestahl[at]gmail.com.
 
-# Contributing
+## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change. If you have specific questions about my
 code or would like to work with me directly, you can send an email to kalestahl[at]gmail.com.
 
-# Credits
+## Credits
 Original concept came from twitter user @NikyuAlex and their spreadsheet found here:
 https://twitter.com/NikyuAlex/status/1630979632294920195
 All Pokemon Sprite images from PokemonDB.net.
@@ -65,7 +66,7 @@ All item images from Aby Zab's google drive:
 https://drive.google.com/drive/folders/1rPpIzyWRidSKoAwQyWwiVg9hTyjU-8r3
 All Tera-type images from previous spreadsheet.
 
-# License
+## License
 
 MIT License
 
