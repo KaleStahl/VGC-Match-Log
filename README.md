@@ -1,24 +1,30 @@
 
-# VGC Team Logger #
+# VGC Team Logger
 
 VGC Team Logger is a Python application for tracking matches and changes made to a team after.
 
-# Installation #
+# Installation
 
 
-# Usage #
+# Usage
 
 To use this program, simply execute the exe file and the GUI will begin.
 
-## Menu Bar ##
-### File ###
-#### New Team Log#### - Clears current team log and makes a new blank team log. This will delete all of your current teams and matches. If you have any open matches, it will first prompt to save.
-#### Open Team Log#### - Opens a previously saved team log. This program can only open files created by this program. If you have any open matches, it will first prompt to save.
-#### Save Team Log#### - Saves your current team log as a specially formatted .txt file.
-#### Exit#### - Closes the application.
-### Help ###
-#### README ####- Opens this document in your default application.
-#### GitHub #### - Opens the url to the Github Repo for this project in your default browser.
+## Menu Bar
+### File
+#### New Team Log
+- Clears current team log and makes a new blank team log. This will delete all of your current teams and matches. If you have any open matches, it will first prompt to save.
+#### Open Team Log
+- Opens a previously saved team log. This program can only open files created by this program. If you have any open matches, it will first prompt to save.
+#### Save Team Log
+ - Saves your current team log as a specially formatted .txt file.
+#### Exit
+ - Closes the application.
+### Help
+#### README
+- Opens this document in your default application.
+#### GitHub
+- Opens the url to the Github Repo for this project in your default browser.
 
 ## Direct Interface ##
 ### Team Pane ###
