@@ -6,37 +6,42 @@ VGC Team Logger is a Python application for tracking matches and changes made to
 # Installation #
 
 
-# Usage #
+# USAGE #
 
-To use this program, simply execute the exe file and the GUI will begin.
+To use this program, simply execute the .exe file and the GUI will begin.
 
 ## Menu Bar ##
 ### File ###
-#### New Team Log#### - Clears current team log and makes a new blank team log. This will delete all of your current teams and matches. If you have any open matches, it will first prompt to save.
-#### Open Team Log#### - Opens a previously saved team log. This program can only open files created by this program. If you have any open matches, it will first prompt to save.
-#### Save Team Log#### - Saves your current team log as a specially formatted .txt file.
-#### Exit#### - Closes the application.
+New Team Log - Clears current team log and makes a new blank team log. This will delete all of your current teams and matches. If you have any open matches, it will first prompt to save.
+Open Team Log - Opens a previously saved team log. This program can only open files created by this program. If you have any open matches, it will first prompt to save.
+Save Team Log - Saves your current team log as a specially formatted .txt file.
+Exit - Closes the application.
+### PokePaste ###
+Generate PokePaste - Allows you to generate a pokepaste by entering data similar to the Showdown Teambuilder.
+Export Teams - Exports a PokePaste readable by showdown of all teams added by the "add team" button.
+Export Opponent's teams - Exports a PokePaste readble by Showdown of all opponent's teams added with the "new match" button.
 ### Help ###
-#### README ####- Opens this document in your default application.
-#### GitHub #### - Opens the url to the Github Repo for this project in your default browser.
+README - Opens this document in your default application.
+GitHub - Opens the url to the Github Repo for this project in your default browser.
 
 ## Direct Interface ##
 ### Team Pane ###
 ### Match Pane ###
 
-# Support #
+# SUPPORT #
 
 If you have any issues, check the GitHub repo for updates. If the problem is not fixed there,
 please open an issue on the repo. If these issues are not fixed and you feel reaching out to me directly is the
 best course of action, you can send an email to kalestahl[at]gmail.com.
 
-# Contributing #
+# CONTRIBUTING #
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change. If you have specific questions about my
 code or would like to work with me directly, you can send an email to kalestahl[at]gmail.com.
 
-# Credits #
+# CREDITS #
+
 Original concept came from twitter user @NikyuAlex and their spreadsheet found here:
 https://twitter.com/NikyuAlex/status/1630979632294920195
 All Pokemon Sprite images from PokemonDB.net.
@@ -44,7 +49,7 @@ All item images from Aby Zab's google drive:
 https://drive.google.com/drive/folders/1rPpIzyWRidSKoAwQyWwiVg9hTyjU-8r3
 All Tera-type images from previous spreadsheet.
 
-# License#
+# LICENSE #
 
 MIT License
 
