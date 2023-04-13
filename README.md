@@ -40,7 +40,7 @@ To use this program, simply execute the .exe file and the GUI will begin. Specif
 ##### README
 - Opens this "README.txt" document in your default application.
 ##### GitHub
-- Opens the url to the Github Repo for this project in your default browser.
+- Opens the url to the GitHub Repo for this project in your default browser.
 
 ### Direct Interface
 #### Team Pane
@@ -60,11 +60,11 @@ code or would like to work with me directly, you can send an email to kalestahl[
 
 ## Credits
 Original concept came from twitter user @NikyuAlex and their spreadsheet found here:
-https://twitter.com/NikyuAlex/status/1630979632294920195
-All Pokemon Sprite images from PokemonDB.net.
+https://twitter.com/NikyuAlex/status/1630979632294920195\\
+All Pokemon Sprite images from https://pokemondb.net/\\
 All item images from Aby Zab's google drive:
-https://drive.google.com/drive/folders/1rPpIzyWRidSKoAwQyWwiVg9hTyjU-8r3
-All Tera-type images from previous spreadsheet.
+https://drive.google.com/drive/folders/1rPpIzyWRidSKoAwQyWwiVg9hTyjU-8r3 \\
+All Tera-type images from previous spreadsheet.\\
 
 ## License
 

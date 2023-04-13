@@ -618,34 +618,49 @@ class Application:
         -------
         None.
         """
+        frame.update()
         #Clears frame
         for widget in frame.winfo_children():
             widget.destroy()
-        #frame.columnconfigure(0, weight = 1)
-        frame.rowconfigure(0, weight = 2)
+        frame.columnconfigure(0, weight = 1)
         frame.rowconfigure(1, weight = 1)
         frame.rowconfigure(2, weight = 1)
         frame.rowconfigure(3, weight = 12)
-        frame.rowconfigure(4, weight = 1)
-        frame.rowconfigure(5, weight = 4)
+        frame.rowconfigure(4, weight = 4)
 
-        tk.Label(frame, text = "Matches").grid(column = 0, row = 0)
+        #tk.Label(frame, text = "Matches").grid(column = 0, row = 0)
 
         tk.Label(frame, text = "Team Used: " + match.teamName).grid(column = 0, row = 1)
 
-        tk.Label(frame, text = "Opponent's Team:").grid(column = 0, row = 2)
+        tk.Label(frame, text = "Opponent's Team:").grid(column = 0, row = 2, sticky = "w")
 
         oppTeamFrame = tk.Frame(frame)
         self.displayPokePaste(oppTeamFrame, match.oppTeam)
         oppTeamFrame.grid(column = 0, row = 3)
 
-        tk.Label(frame, text = "Notes:").grid(column = 0, row = 4)
+        notesFrame = tk.Frame(frame, pady=5, padx = 5)
+        notesFrame.grid(column = 0, row = 4)
 
-        notes = tk.Text(frame, height = 5, width = 50)
+        notesFrame.rowconfigure(0, weight = 1)
+        notesFrame.rowconfigure(1, weight = 4)
+        notesFrame.update()
+        notesFrame.columnconfigure(0, weight = 1)
+        notesFrame.columnconfigure(1, weight = 1)
+
+        tk.Label(notesFrame, text = "Notes:").grid(row = 0, column = 0)
+
+        scrollbar = tk.Scrollbar(notesFrame)
+        scrollbar.grid(column =1, row = 1, sticky = "ns")
+        notes = tk.Text(notesFrame, height = 5, width = 50)
+        notes.grid(row = 1, column = 0, sticky = "w")
+
+        notes.config(yscrollcommand = scrollbar.set)
+        scrollbar.config(command = notes.yview)
+
         notes.delete(1.0, tk.END)
         notes.insert(tk.END, match.notes)
         notes.config(state=tk.DISABLED)
-        notes.grid(column = 0, row = 5)
+
 
     def checkMatch(self, event):
         """
@@ -680,33 +695,48 @@ class Application:
         ## Configures column setup
 
         root.geometry("1360x680")
+        #root.state('zoomed')
         root.title("VGC Team Logger")
-        root.columnconfigure(0, weight = 1)
-        root.columnconfigure(1, weight = 4)
-        root.columnconfigure(2, weight = 4)
-        root.columnconfigure(3, weight = 1)
-        root.rowconfigure(0, weight = 1)
-        root.rowconfigure(1, weight = 1)
-        root.rowconfigure(2, weight = 10)
-        root.grid_columnconfigure(1, minsize=100)
-        root.grid_rowconfigure(2, minsize=100)
-        root.grid_columnconfigure(2, minsize=100)
-        root.rowconfigure(3, weight = 1)
-        root.rowconfigure(4, weight = 1)
+        root.update()
+        root.columnconfigure(0, weight = 1, minsize = root.winfo_width()/2)
+        root.columnconfigure(1, weight = 1, minsize = root.winfo_width()/2)
+        root.rowconfigure(0, weight = 1, minsize = root.winfo_height())
+        # separator = ttk.Separator(root, orient='vertical')
+        # separator.place(relx=0.5, rely=0, relwidth=0.2, relheight=1)
 
-        ## Configure First column
+
+        ## Configure Match section
+        Team = tk.Frame(root)
+        Team.update()
+        Team.grid(row = 0, column = 0)
+        Team.columnconfigure(0, weight = 2, minsize = root.winfo_width()/7)
+        Team.columnconfigure(1, weight = 5, minsize = 5*root.winfo_width()/14)
+        Team.rowconfigure(0, weight = 1, minsize = root.winfo_height()/8)
+        Team.rowconfigure(1, weight = 1, minsize = root.winfo_height()/8)
+        Team.rowconfigure(2, weight = 4, minsize = root.winfo_height()/2)
+        Team.rowconfigure(3, weight = 1, minsize = root.winfo_height()/8)
+        Team.rowconfigure(4, weight = 1, minsize = root.winfo_height()/8)
 
         # Listbox label
-        TSoptions = self._TeamName
-        tk.Label(root, text='Current team:').grid(column=0, row=0, sticky = "S")
-
+        tk.Label(Team, text='Teams', font = 'Helvetica 11 bold', anchor = "center").grid(column=0, row=0, columnspan = 2)
         # Configures a Listbox for selecting team
-        TSframe = tk.Frame(root)
-        TSframe.grid(column = 0, row = 1)
+        TSoptions = self._TeamName
+        TSframe = tk.Frame(Team, padx = 10, pady=5)
+        tk.Label(TSframe, text='Current team:').pack()
+        TSframe.grid(column = 0, row = 2)
         self._teamSelect = tk.Listbox(TSframe)
         self._teamSelect.bind('<<ListboxSelect>>', self.checkTeam)
         self.updateListbox(self._teamSelect, TSoptions)
         self._teamSelect.pack(side = 'left',fill = 'y' )
+
+        # Adds "Add Team" button
+        self._addTeamButton = tk.Button(Team, text='Add Team', command = self.uxAddTeam)
+        self._addTeamButton.grid(column = 0, row = 3)
+
+        # Adds "Delete Team" button
+        self._deleteTeamButton = tk.Button(Team, text='Delete Team', command = self.uxDeleteTeam)
+        self._deleteTeamButton.grid(column = 0, row = 4)
+        self._deleteTeamButton.config(state =tk. DISABLED)
 
         # Adds scrollbar functionality
         scrollbar = tk.Scrollbar(TSframe)
@@ -715,48 +745,49 @@ class Application:
         scrollbar.pack(side="right", fill="y")
 
         # Sets Frame to put Pokepaste
-        self._pasteFrame = tk.Frame(root)
-        self._pasteFrame.grid(column=1, row =0, rowspan = 5)
+        self._pasteFrame = tk.Frame(Team)
+        self._pasteFrame.grid(column=1, row =1, rowspan = 4)
 
-        # Adds "Add Team" button
-        self._addTeamButton = tk.Button(root, text='Add Team', command = self.uxAddTeam)
-        self._addTeamButton.grid(column = 0, row = 3)
-
-        # Adds "Delete Team" button
-        self._deleteTeamButton = tk.Button(root, text='Delete Team', command = self.uxDeleteTeam)
-        self._deleteTeamButton.grid(column = 0, row = 4)
-        self._deleteTeamButton.config(state =tk. DISABLED)
-
-        ## Configure Second column
+        ## Configure Match section
+        Match = tk.Frame(root)
+        Match.grid(row = 0, column = 1)
+        Match.columnconfigure(0, weight = 5, minsize = 5*root.winfo_width()/14)
+        Match.columnconfigure(1, weight = 2, minsize = root.winfo_width()/7)
+        Match.rowconfigure(0, weight = 1, minsize = root.winfo_height()/8)
+        Match.rowconfigure(1, weight = 1, minsize = root.winfo_height()/8)
+        Match.rowconfigure(2, weight = 4, minsize = root.winfo_height()/2)
+        Match.rowconfigure(3, weight = 1, minsize = root.winfo_height()/8)
+        Match.rowconfigure(4, weight = 1, minsize = root.winfo_height()/8)
 
         # Configures a Listbox for selecting match
+        tk.Label(Match, text='Matches', font = 'Helvetica 11 bold', anchor = "center").grid(column=0, row=0, columnspan = 2, sticky = tk.NS)
         MSoptions = self._MatchLog
-        tk.Label(root, text='Current Match:').grid(column=3, row=0, sticky = "S")
-        MSframe = tk.Frame(root)
-        MSframe.grid(column = 3, row = 1)
+        MSframe = tk.Frame(Match, padx = 10, pady=5)
+        MSframe.grid(column = 1, row = 2)
+        tk.Label(MSframe, text='Current Match:').pack()
         self._matchSelect = tk.Listbox(MSframe)
         self._matchSelect.bind('<<ListboxSelect>>', self.checkMatch)
         self.updateListbox(self._matchSelect, MSoptions)
-        self._matchSelect.pack(side = 'left',fill = 'y' )
+        self._matchSelect.pack(side = 'right',fill = 'y' )
 
         # Adds scrollbar functionality
         MSscrollbar = tk.Scrollbar(MSframe)
         self._matchSelect.config(yscrollcommand = MSscrollbar.set)
         MSscrollbar.config(command = self._matchSelect.yview)
-        MSscrollbar.pack(side="right", fill="y")
+        MSscrollbar.pack(side="left", fill="y")
 
         # Adds frame to put match data
-        self._matchFrame = tk.Frame(root)
-        self._matchFrame.grid(column=2, row = 0, rowspan = 5)
+        self._matchFrame = tk.Frame(Match)
+        self._matchFrame.grid(column=0, row = 1, rowspan = 4)
 
         # Adds "New Match" button
-        self._newMatchButton = tk.Button(root, text='New Match', command = self.uxNewMatch)
-        self._newMatchButton.grid(column=3, row=3)
+        self._newMatchButton = tk.Button(Match, text='New Match', command = self.uxNewMatch)
+        self._newMatchButton.grid(column=1, row=3)
         self._newMatchButton.config(state =tk.DISABLED)
 
         # Adds "Delete Match" button
-        self._deleteMatchButton = tk.Button(root, text='Delete Match', command = self.uxDeleteMatch)
-        self._deleteMatchButton.grid(column = 3, row = 4)
+        self._deleteMatchButton = tk.Button(Match, text='Delete Match', command = self.uxDeleteMatch)
+        self._deleteMatchButton.grid(column = 1, row = 4)
         self._deleteMatchButton.config(state =tk.DISABLED)
 
     def updateOptionMenu(self, optionMenu, options):
@@ -857,7 +888,7 @@ class Application:
             col = i % 2
             row = math.floor(i/2)
             if(i < len(team.pokemon)):
-                poke = tk.Label(pokeframe, text = str(team.pokemon[i]),anchor = "w", justify = "left")
+                poke = tk.Label(pokeframe, text = str(team.pokemon[i]), anchor = "w", justify = "left")
                 from pathlib import Path
                 from PIL import Image, ImageTk
                 #add sprite image
@@ -871,7 +902,7 @@ class Application:
                     imageLab.image = img
                 else:
                     imageLab = tk.Label(pokeframe, text = "[No Image]")
-                imageLab.grid(row = 0, column = 0)
+                imageLab.grid(row = 0, column = 0, sticky = tk.E)
 
                 #add item image
                 itemPath = "items/" +str(team.pokemon[i].item).replace(" ", "-")+ ".png"
@@ -884,7 +915,7 @@ class Application:
                     itemLab.image = imgItem
                 else:
                     itemLab = tk.Label(pokeframe, text = "[No Image]")
-                itemLab.grid(row = 2, column = 0, sticky = tk.N)
+                itemLab.grid(row = 2, column = 0)
 
                 #add tera image
                 teraPath = "tera_types/" +str(team.pokemon[i].tera)+ ".png"
@@ -897,12 +928,12 @@ class Application:
                     teraLab.image = imgTera
                 else:
                     teraLab = tk.Label(pokeframe, text = "[No Image]")
-                teraLab.grid(row = 1, column = 0, sticky = tk.N)
+                teraLab.grid(row = 1, column = 0, sticky = tk.E)
 
             else:
                 poke = tk.Label(pokeframe, text = "", anchor = "w", justify = "left")
             poke.grid(row = 0, column = 1, sticky = tk.NW, rowspan = 3)
-            pokeframe.grid(column = col, row = row, sticky = tk.NS)
+            pokeframe.grid(column = col, row = row, sticky = tk.NW)
 
     def uxInitialize(self, root):
         """
