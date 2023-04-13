@@ -4,16 +4,18 @@ User_Interface.py.
 Class to manage interaction with user interface.
 
 Author: Kale Stahl
-Last Modified: 4/10/2023
+Last Modified: 4/13/2023
 
 """
 import tkinter as tk
 import Parser
 import Match
+import Pokemon
+from tkinter import ttk
 from tkinter.filedialog import asksaveasfile, askopenfilename
 import math
 
-class Application:
+class User_Interface:
     """Class to create the application GUI."""
 
     _MatchLog = []
@@ -217,8 +219,163 @@ class Application:
         PokePaste.insert(tk.END, teamstr)
         PokePaste.config(state=tk.DISABLED)
 
-    def uxGeneratePokepaste(self):
+
+    def generatePaste(self, text,pokemon, nature, tera, ivs,evs, item, moves, ability):
+        poke = Pokemon.Pokemon(name = pokemon,
+                               nickname = None,
+                               gender = None,
+                               nature = nature.get(),
+                               tera = tera.get(),
+                               ivs =[ivs[0].get(),ivs[1].get(),ivs[2].get(),ivs[3].get(),ivs[4].get(),ivs[5].get()],
+                               evs =[evs[0].get(),evs[1].get(),evs[2].get(),evs[3].get(),evs[4].get(),evs[5].get()],
+                               ability = ability.get(),
+                               item = item,
+                               moves =[moves[0].get(), moves[1].get(),moves[2].get(),moves[3].get()]
+                               )
+        text.delete(1.0, tk.END)
+        text.insert(tk.END, str(poke))
+        text.config(state=tk.DISABLED)
         return
+
+    def uxGeneratePokepaste(self):
+        newWindow = tk.Toplevel(self._ux)
+        newWindow.title("PokePaste Generator")
+        newWindow.lift()
+        newWindow.attributes('-topmost',True)
+        newWindow.after_idle(newWindow.attributes,'-topmost',False)
+        newWindow.geometry("600x600")
+
+        newWindow.rowconfigure(0, weight = 1)
+        newWindow.rowconfigure(1, weight = 1)
+        newWindow.rowconfigure(2, weight = 1)
+        newWindow.rowconfigure(3, weight = 1)
+        newWindow.rowconfigure(4, weight = 1)
+        newWindow.rowconfigure(5, weight = 1)
+        newWindow.rowconfigure(6, weight = 1)
+        newWindow.rowconfigure(7, weight = 1)
+        newWindow.rowconfigure(8, weight = 1)
+        newWindow.rowconfigure(9, weight = 1)
+        newWindow.rowconfigure(10, weight = 5)
+        newWindow.columnconfigure(0, weight = 2)
+        newWindow.columnconfigure(1, weight = 1)
+        newWindow.columnconfigure(2, weight = 1)
+        newWindow.columnconfigure(3, weight = 1)
+        newWindow.columnconfigure(4, weight = 1)
+        newWindow.columnconfigure(5, weight = 1)
+        newWindow.columnconfigure(6, weight = 1)
+        newWindow.columnconfigure(7, weight = 1)
+        newWindow.columnconfigure(8, weight = 1)
+
+        # Adds labels
+        tk.Label(newWindow, text = "Pokemon:").grid(row = 0, column = 0, sticky = "e")
+        pokemon = tk.Entry(newWindow)
+        pokemon.grid(row =0, column = 1, columnspan = 6, sticky = "w")
+
+        tk.Label(newWindow, text = "Item:").grid(row = 1, column = 0, sticky = "e")
+        item_value = tk.StringVar(newWindow)
+        item = tk.Entry(newWindow, textvariable=item_value)
+        item.grid(row =1, column = 1, columnspan = 6, sticky = "w")
+
+        tk.Label(newWindow, text = "Ability:").grid(row = 2, column = 0, sticky = "e")
+        ability = tk.Entry(newWindow)
+        ability.grid(row =2, column = 1, columnspan = 6, sticky = "w")
+
+        tk.Label(newWindow, text = "Tera Type:").grid(row = 3, column = 0, sticky = "e")
+        types = ["Dragon", "Grass", "Bug", "Fire", "Water", "Ice", "Electric", "Psychic", "Ghost", "Poison", "Fairy", "Dark", "Steel", "Rock", "Fighting", "Ground", "Normal", "Flying"]
+        types.sort()
+        fours = [4* i for i in range(0, 64)]
+        tera_value = tk.StringVar(newWindow)
+        tera = tk.OptionMenu(newWindow,tera_value,*types)
+        tera.grid(row =3, column = 1, columnspan = 6, sticky = "w")
+
+        tk.Label(newWindow, text = "HP:").grid(row = 4, column = 1)
+        tk.Label(newWindow, text = "ATK:").grid(row = 4, column = 2)
+        tk.Label(newWindow, text = "DEF:").grid(row = 4, column = 3)
+        tk.Label(newWindow, text = "SPA:").grid(row = 4, column = 4)
+        tk.Label(newWindow, text = "SPD:").grid(row = 4, column = 5)
+        tk.Label(newWindow, text = "SPE:").grid(row = 4, column = 6)
+
+        tk.Label(newWindow, text = "EVs:").grid(row = 5, column = 0, sticky = "e")
+        hpev_value = tk.StringVar(newWindow)
+        hpev_value.set("0")
+        hpev = ttk.Spinbox(newWindow, width = 4, from_=0, to=252, values = fours, textvariable= hpev_value, wrap = False)
+        hpev.grid(row = 5, column = 1)
+        atkev_value = tk.StringVar(newWindow)
+        atkev_value.set("0")
+        atkev = ttk.Spinbox(newWindow,width = 4, from_=0, to=252, values = fours, textvariable= atkev_value, wrap = False)
+        atkev.grid(row = 5, column = 2)
+        defev_value = tk.StringVar(newWindow)
+        defev_value.set("0")
+        defev = ttk.Spinbox(newWindow,width = 4, from_=0, to=252,  values = fours,textvariable= defev_value, wrap = False)
+        defev.grid(row = 5, column = 3)
+        spaev_value = tk.StringVar(newWindow)
+        spaev_value.set("0")
+        spaev = ttk.Spinbox(newWindow,width = 4, from_=0, to=252, values = fours, textvariable= spaev_value, wrap = False)
+        spaev.grid(row = 5, column = 4)
+        spdev_value = tk.StringVar(newWindow)
+        spdev_value.set("0")
+        spdev = ttk.Spinbox(newWindow,width = 4, from_=0, to=252, values = fours, textvariable= spdev_value, wrap = False)
+        spdev.grid(row = 5, column = 5)
+        speev_value = tk.StringVar(newWindow)
+        speev_value.set("0")
+        speev = ttk.Spinbox(newWindow,width = 4, from_=0, to=252, values = fours, textvariable= speev_value, wrap = False)
+        speev.grid(row = 5, column = 6)
+
+        tk.Label(newWindow, text = "IVs:").grid(row = 6, column = 0, sticky = "e")
+        hpiv_value = tk.StringVar(newWindow)
+        hpiv_value.set("31")
+        hpiv = ttk.Spinbox(newWindow,width = 4, from_=0, to=31, textvariable= hpiv_value, wrap = True)
+        hpiv.grid(row = 6, column = 1)
+        atkiv_value = tk.StringVar(newWindow, value = 31)
+        atkiv = ttk.Spinbox(newWindow,width = 4, from_=0, to=31, textvariable= atkiv_value, wrap = True)
+        atkiv.grid(row = 6, column = 2)
+        defiv_value = tk.StringVar(newWindow)
+        defiv_value.set("31")
+        defiv = ttk.Spinbox(newWindow,width = 4, from_=0, to=31, textvariable= defiv_value, wrap = True)
+        defiv.grid(row = 6, column = 3)
+        spaiv_value = tk.StringVar(newWindow)
+        spaiv_value.set("31")
+        spaiv = ttk.Spinbox(newWindow,width = 4, from_=0, to=31, textvariable= spaiv_value, wrap =True)
+        spaiv.grid(row = 6, column = 4)
+        spdiv_value = tk.StringVar(newWindow)
+        spdiv_value.set("31")
+        spdiv = ttk.Spinbox(newWindow,width = 4, from_=0, to=31, textvariable= spdiv_value, wrap = True)
+        spdiv.grid(row = 6, column = 5)
+        speiv_value = tk.StringVar(newWindow)
+        speiv_value.set("31")
+        speiv = ttk.Spinbox(newWindow,width = 4, from_=0, to=31, textvariable= speiv_value, wrap = True)
+        speiv.grid(row = 6, column = 6)
+
+        tk.Label(newWindow, text = "Nature:").grid(row = 7, column = 0, sticky = "e")
+        nature = tk.Entry(newWindow)
+        nature.grid(row =7, column = 1 ,columnspan=6, sticky = "ew", padx = 2)
+
+        tk.Label(newWindow, text = "Moves:").grid(row = 8, column = 0, sticky = "e")
+        move1 = tk.Entry(newWindow)
+        move1.grid(row =8, column = 1 ,columnspan=2, sticky = "ew", padx = 2)
+        move2 = tk.Entry(newWindow)
+        move2.grid(row =8, column = 3, columnspan=2, sticky = "ew", padx = 2)
+        move3 = tk.Entry(newWindow)
+        move3.grid(row =8, column = 5,columnspan=2, sticky = "ew", padx = 2)
+        move4 = tk.Entry(newWindow)
+        move4.grid(row =8, column = 7,columnspan=2,  sticky = "ew", padx = 2)
+
+
+        ivs =[hpiv_value,atkiv_value,defiv_value,spaiv_value,spdiv_value, speiv_value]
+        evs =[hpev_value,atkev_value,defev_value,spaev_value,spdev_value, speev_value]
+        moves =[move1, move2,move3,move4]
+        text = tk.Text(newWindow)
+        text.grid(row = 11, column = 0, columnspan = 10, sticky ="ew", padx= 5, pady=5)
+        tk.Button(newWindow, text = "Generate", command= lambda: self.generatePaste(text,
+                                                                                    pokemon.get(),
+                                                                                    nature,
+                                                                                    tera_value,
+                                                                                    ivs,
+                                                                                    evs,
+                                                                                    item_value.get(),
+                                                                                    moves,
+                                                                                    ability
+                                                                                    )).grid(row = 9, column = 0, columnspan = 8)
 
     def uxFileMenu(self, root):
         """
@@ -1014,8 +1171,8 @@ class Application:
         """
         self.uxFileMenu(root)
         self.uxLayout(root)
-        ux.mainloop()
+        self._ux.mainloop()
 
-ux = tk.Tk()
-app = Application(ux)
-app.uxInitialize(ux)
+# ux = tk.Tk()
+# app = User_Interface(ux)
+# app.uxInitialize(ux)

@@ -4,7 +4,7 @@ Pokemon.py.
 Pokemon class to create a pokemon with Pokepaste data.
 
 Author: Kale Stahl
-Last Modified: 3/4/2023
+Last Modified: 4/13/2023
 """
 class Pokemon:
     """Pokemon class."""
@@ -73,6 +73,8 @@ class Pokemon:
             paste += " ({})".format(self.gender)
         if(self.item != None and self.item != ""):
             paste += " @ {}\n".format(self.item)
+        else:
+            paste += "\n"
         if(self.ability != None and self.ability != ""):
             paste += "Ability: {}\n".format(self.ability)
         if(self.tera != None and self.tera != ""):
