@@ -8,7 +8,6 @@ Last Modified: 4/10/2023
 
 """
 import tkinter as tk
-from tkinter import ttk
 import Parser
 import Match
 from tkinter.filedialog import asksaveasfile, askopenfilename
@@ -149,6 +148,14 @@ class Application:
             tk.messagebox.showerror('New Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
     def uxExportOpponentsTeams(self):
+        """
+        Export all opponent's teams to a PokePaste.
+
+        Returns
+        -------
+        None.
+
+        """
         newWindow = tk.Toplevel(self._ux)
         newWindow.title("Export Opponent's Teams")
         newWindow.lift()
@@ -176,6 +183,14 @@ class Application:
         PokePaste.config(state=tk.DISABLED)
 
     def uxExportTeams(self):
+        """
+        Export all teams to a PokePaste.
+
+        Returns
+        -------
+        None.
+
+        """
         newWindow = tk.Toplevel(self._ux)
         newWindow.title("Export Teams")
         newWindow.lift()

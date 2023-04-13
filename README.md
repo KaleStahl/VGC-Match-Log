@@ -13,38 +13,38 @@ To use this program, simply execute the .exe file and the GUI will begin. Specif
 ### Menu Bar
 #### File
 ##### New Team Log
-- Clears current team log and makes a new blank team log.
-- This will delete all of your current teams and matches.
-- If you have any open matches, it will first prompt to save.
+Clears current team log and makes a new blank team log. This will delete all of your current teams and matches. If you have any open matches, it will first prompt to save.
 ##### Open Team Log
-- Opens a previously saved team log.
-- This program can only open files created by this program.
-- If you have any open matches, it will first prompt to save.
+Opens a previously saved team log. This program can only open files created by this program. If you have any open matches, it will first prompt to save.
 ##### Save Team Log
-- Saves your current team log as a specially formatted .txt file.
-- This text file can be read by this application, but not Showdown.
+Saves your current team log as a specially formatted .txt file.
+This text file can be read by this application, but not Showdown.
 ##### Exit
-- Closes the application.
+Closes the application.
 
 #### PokePaste
 ##### Generate PokePaste
-- Opens a window that allows you to enter Pokemon data.
-- "Generate" button will generate a PokePaste readable by both this program and Showdown.
+Opens a window that allows you to enter Pokemon data. "Generate" button will generate a PokePaste readable by both this program and Showdown.
 ##### Export Teams
-- Opens a window with a text paste of all teams entered through the "add team" button.
-- This paste will be readable by Showdown, but not this application.
+Opens a window with a text paste of all teams entered through the "add team" button. This paste will be readable by Showdown, but not this application.
 ##### Export Opponent's Teams
-- Opens a window with a text paste of all opponent's teams entered through the "new match" button.
-- This paste will be readable by Showdown, but not this application.
+Opens a window with a text paste of all opponent's teams entered through the "new match" button. This paste will be readable by Showdown, but not this application.
 #### Help
 ##### README
-- Opens this "README.txt" document in your default application.
+Opens this "README.txt" document in your default application.
 ##### GitHub
-- Opens the url to the GitHub Repo for this project in your default browser.
+Opens the url to the GitHub Repo for this project in your default browser.
 
 ### Direct Interface
 #### Team Pane
+The
+##### Team Select
+##### Add Team Button
+##### Delete Team Button
 #### Match Pane
+##### Match Select
+##### New Match Button
+##### Delete Match Button
 
 ## Support
 
