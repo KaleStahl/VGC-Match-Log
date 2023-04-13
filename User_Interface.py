@@ -149,10 +149,58 @@ class Application:
             tk.messagebox.showerror('New Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
     def uxExportOpponentsTeams(self):
-        return
+        newWindow = tk.Toplevel(self._ux)
+        newWindow.title("Export Opponent's Teams")
+        newWindow.lift()
+        newWindow.attributes('-topmost',True)
+        newWindow.after_idle(newWindow.attributes,'-topmost',False)
+        newWindow.geometry("500x450")
+
+        frame = tk.Frame(newWindow, padx = 10, pady =10)
+        frame.pack()
+        PokePaste = tk.Text(frame)
+        PokePaste.pack(side = "left",fill = 'y' )
+
+        # Adds scrollbar functionality
+        scrollbar = tk.Scrollbar(frame)
+        scrollbar.pack(side="right", fill="y")
+        PokePaste.config(yscrollcommand = scrollbar.set)
+        scrollbar.config(command = PokePaste.yview)
+
+        teamstr = ""
+        for match in self._MatchLog:
+            teamstr += "=== " + str(match.name) +" === \n \n"
+            teamstr += str(match.oppTeam)
+        PokePaste.delete(1.0, tk.END)
+        PokePaste.insert(tk.END, teamstr)
+        PokePaste.config(state=tk.DISABLED)
 
     def uxExportTeams(self):
-        return
+        newWindow = tk.Toplevel(self._ux)
+        newWindow.title("Export Teams")
+        newWindow.lift()
+        newWindow.attributes('-topmost',True)
+        newWindow.after_idle(newWindow.attributes,'-topmost',False)
+        newWindow.geometry("500x450")
+
+        frame = tk.Frame(newWindow, padx = 10, pady =10)
+        frame.pack()
+        PokePaste = tk.Text(frame)
+        PokePaste.pack(side = "left",fill = 'y' )
+
+        # Adds scrollbar functionality
+        scrollbar = tk.Scrollbar(frame)
+        scrollbar.pack(side="right", fill="y")
+        PokePaste.config(yscrollcommand = scrollbar.set)
+        scrollbar.config(command = PokePaste.yview)
+
+        teamstr = ""
+        for i in range(len(self._Team)):
+            teamstr += "=== " + str(self._TeamName[i]) +" === \n \n"
+            teamstr += str(self._Team[i])
+        PokePaste.delete(1.0, tk.END)
+        PokePaste.insert(tk.END, teamstr)
+        PokePaste.config(state=tk.DISABLED)
 
     def uxGeneratePokepaste(self):
         return
