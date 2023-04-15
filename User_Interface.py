@@ -916,7 +916,7 @@ class UserInterface:
 
         root.geometry("1360x680")
         #root.state('zoomed')
-        root.title("VGC Team Logger")
+        root.title("VGC Match Log")
         root.update()
         root.columnconfigure(0, weight = 1, minsize = root.winfo_width()/2)
         root.columnconfigure(1, weight = 1, minsize = root.winfo_width()/2)
