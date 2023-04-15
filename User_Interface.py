@@ -15,7 +15,7 @@ from tkinter import ttk
 from tkinter.filedialog import asksaveasfile, askopenfilename
 import math
 
-class User_Interface:
+class UserInterface:
     """Class to create the application GUI."""
 
     _MatchLog = []
@@ -1172,7 +1172,3 @@ class User_Interface:
         self.uxFileMenu(root)
         self.uxLayout(root)
         self._ux.mainloop()
-
-# ux = tk.Tk()
-# app = User_Interface(ux)
-# app.uxInitialize(ux)

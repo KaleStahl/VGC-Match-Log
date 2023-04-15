@@ -8,5 +8,5 @@ import tkinter as tk
 import User_Interface
 
 ux = tk.Tk()
-app = User_Interface.User_Interface(ux)
+app = User_Interface.UserInterface(ux)
 app.uxInitialize(ux)
