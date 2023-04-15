@@ -1,10 +1,10 @@
 
 # VGC Team Logger
 
-VGC Team Logger is a Python application for tracking matches and changes made to a team after.
+VGC Team Logger is a Python application for tracking matches and teams used in those matches in a clear and concise manner. These matches can be saved and loaded, and teams are copied from Showdown for ease of use.
 
 ## Installation
-
+To istall this program, download "VGC-Match-Log.zip" and extract it to the location of your choice. Once extracted, locate the "VGC-Match-log.exe" and run it. Be careful not to move the .exe file without first copying the folders "temp_files", "items", "sprites", and "tera_types" to the new location. The exe can run without all folders, but without "temp_files" it cannot open or save teams and without the other files it cannot display images.
 
 ## Usage
 
@@ -37,10 +37,14 @@ Opens the url to the GitHub Repo for this project in your default browser.
 
 ### Direct Interface
 #### Team Pane
-The
+The team pane holds all information about the teams you have used.
 ##### Team Select
+Holds all currently stored teams. To display a team, click on its name in the listbox labeled "Current Team". If you click a team not currently displayed, iit will automatically display its PokePaste with images to the right.
 ##### Add Team Button
+Adds a new team to the listbox. Enter you team name in the box "Team Name", Note it must be different that previous team names. Then copy your Showdown paste into the box below and click "add". The team name will now appear in the listbox and you can display the team by clicking on the name.
 ##### Delete Team Button
+Deletes a team from the listbox. After clicking the button, select the team you wish to delete and click "delete". That team will no longer appear in the listbox, though if it was currently displayed it will not go away until another team is selected.
+
 #### Match Pane
 ##### Match Select
 ##### New Match Button
