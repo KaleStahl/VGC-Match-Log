@@ -39,16 +39,20 @@ Opens the url to the GitHub Repo for this project in your default browser.
 #### Team Pane
 The team pane holds all information about the teams you have used.
 ##### Team Select
-Holds all currently stored teams. To display a team, click on its name in the listbox labeled "Current Team". If you click a team not currently displayed, iit will automatically display its PokePaste with images to the right.
+Holds all currently stored teams. To display a team, click on its name in the listbox labeled "Current Team". If you click a team not currently displayed, it will automatically display its PokePaste with images to the right.
 ##### Add Team Button
 Adds a new team to the listbox. Enter you team name in the box "Team Name", Note it must be different that previous team names. Then copy your Showdown paste into the box below and click "add". The team name will now appear in the listbox and you can display the team by clicking on the name.
 ##### Delete Team Button
 Deletes a team from the listbox. After clicking the button, select the team you wish to delete and click "delete". That team will no longer appear in the listbox, though if it was currently displayed it will not go away until another team is selected.
 
 #### Match Pane
+The team pane holds all information about the matches you have entered.
 ##### Match Select
+Holds all currently stored matches. To display a match, click on its name in the listbox labeled "Current Match". If you click a team not currently displayed, it will automatically display its PokePaste with images to the left, along with the name of the team used and any notes.
 ##### New Match Button
+Adds a new match to the listbox. Enter the name of your match in the box "Match Name". Note it must be different that previous match names. Then select the team used in the match from the "Team Used" listbox to the right. You can enter the Opponents team PokePaste into the "Opponents Team" box and enter any notes into the "Notes" box. Note that you must select a team used, the opponents team, and a match name. Notes are optional. The match name will now appear in the listbox and you can display the match by clicking on the name.
 ##### Delete Match Button
+Deletes a match from the listbox. After clicking the button, select the match you wish to delete and click "delete". That match will no longer appear in the listbox, though if it was currently displayed it will not go away until another match is selected.
 
 ## Support
 
