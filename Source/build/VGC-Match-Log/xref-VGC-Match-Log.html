@@ -15,7 +15,7 @@
 
 <div class="node">
   <a name="VGC-Match-Log.py"></a>
-  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/VGC-Match-Log.py" type="text/plain"><tt>VGC-Match-Log.py</tt></a>
+  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Source/VGC-Match-Log.py" type="text/plain"><tt>VGC-Match-Log.py</tt></a>
 <span class="moduletype">Script</span>  <div class="import">
 imports:
     <a href="#User_Interface">User_Interface</a>
@@ -373,7 +373,7 @@ imported by:
   <a target="code" href="" type="text/plain"><tt>'org.python'</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
-    <a href="#pickle">pickle</a>
+    <a href="#copy">copy</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
 
   </div>
@@ -538,7 +538,7 @@ imported by:
 
 <div class="node">
   <a name="Leads"></a>
-  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Leads.py" type="text/plain"><tt>Leads</tt></a>
+  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Source/Leads.py" type="text/plain"><tt>Leads</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imported by:
     <a href="#Match">Match</a>
@@ -550,11 +550,12 @@ imported by:
 
 <div class="node">
   <a name="Match"></a>
-  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Match.py" type="text/plain"><tt>Match</tt></a>
+  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Source/Match.py" type="text/plain"><tt>Match</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#Leads">Leads</a>
  &#8226;   <a href="#Parser">Parser</a>
+ &#8226;   <a href="#Team">Team</a>
  &#8226;   <a href="#fileinput">fileinput</a>
 
   </div>
@@ -2581,7 +2582,7 @@ imported by:
 
 <div class="node">
   <a name="Parser"></a>
-  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Parser.py" type="text/plain"><tt>Parser</tt></a>
+  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Source/Parser.py" type="text/plain"><tt>Parser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#Pokemon">Pokemon</a>
@@ -2600,7 +2601,7 @@ imported by:
 
 <div class="node">
   <a name="Pokemon"></a>
-  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Pokemon.py" type="text/plain"><tt>Pokemon</tt></a>
+  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Source/Pokemon.py" type="text/plain"><tt>Pokemon</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imported by:
     <a href="#Parser">Parser</a>
@@ -2612,10 +2613,11 @@ imported by:
 
 <div class="node">
   <a name="Team"></a>
-  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Team.py" type="text/plain"><tt>Team</tt></a>
+  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Source/Team.py" type="text/plain"><tt>Team</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imported by:
-    <a href="#Parser">Parser</a>
+    <a href="#Match">Match</a>
+ &#8226;   <a href="#Parser">Parser</a>
 
   </div>
 
@@ -2623,7 +2625,7 @@ imported by:
 
 <div class="node">
   <a name="User_Interface"></a>
-  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/User_Interface.py" type="text/plain"><tt>User_Interface</tt></a>
+  <a target="code" href="///C:/Users/kales/OneDrive/Desktop/VGC-Match-Log/Source/User_Interface.py" type="text/plain"><tt>User_Interface</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#Leads">Leads</a>
@@ -6133,8 +6135,8 @@ imported by:
   <a target="code" href="///C:/Program%20Files/Python311/Lib/copy.py" type="text/plain"><tt>copy</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#copyreg">copyreg</a>
- &#8226;   <a href="#org">org</a>
+    <a href="#'org.python'">'org.python'</a>
+ &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#weakref">weakref</a>
 
@@ -11442,6 +11444,7 @@ imports:
  &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib._bootstrap">importlib._bootstrap</a>
  &#8226;   <a href="#importlib._bootstrap_external">importlib._bootstrap_external</a>
+ &#8226;   <a href="#importlib.machinery">importlib.machinery</a>
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#warnings">warnings</a>
 
@@ -11593,6 +11596,7 @@ imported by:
     <a href="#cffi.verifier">cffi.verifier</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#imp">imp</a>
+ &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib.abc">importlib.abc</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#numpy.compat.py3k">numpy.compat.py3k</a>
@@ -18527,7 +18531,7 @@ imported by:
   <a target="code" href="" type="text/plain"><tt>org</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
-    <a href="#copy">copy</a>
+    <a href="#pickle">pickle</a>
 
   </div>
 
@@ -19265,14 +19269,14 @@ imported by:
   <a target="code" href="///C:/Program%20Files/Python311/Lib/pickle.py" type="text/plain"><tt>pickle</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#'org.python'">'org.python'</a>
- &#8226;   <a href="#_compat_pickle">_compat_pickle</a>
+    <a href="#_compat_pickle">_compat_pickle</a>
  &#8226;   <a href="#_pickle">_pickle</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#io">io</a>
  &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#org">org</a>
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#struct">struct</a>

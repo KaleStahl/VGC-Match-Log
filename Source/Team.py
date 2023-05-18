@@ -4,14 +4,14 @@ Team.py.
 Team class to compile a team of Pokemon from a paste.
 
 Author: Kale Stahl
-Last Modified: 3/4/2023
+Last Modified: 5/17/2023
 
 """
 
-class Team: 
+class Team:
     """Team Class."""
-    
-    def __init__(self, pokemon):
+
+    def __init__(self, pokemon = []):
         """
         Initialize the Team with a list of up to 6 pokemon.
 
@@ -26,7 +26,7 @@ class Team:
 
         """
         self.pokemon = pokemon
-        
+
     def __str__(self):
         """
         Format the Team to return in a format that Showdown can read.

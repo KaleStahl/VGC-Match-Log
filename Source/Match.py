@@ -4,17 +4,18 @@ Match.py.
 Pokemon class to create a match with Pokepaste data and notes.
 
 Author: Kale Stahl
-Last Modified: 4/8/2023
+Last Modified: 5/17/2023
 
 """
 import fileinput
 import Parser
 import Leads
+import Team
 
 class Match:
     """Match class to store data of a battle."""
 
-    def __init__(self, name, teamName, team, oppTeam, notes, Leads = Leads.Leads()):
+    def __init__(self, name = "", teamName = "", team= Team.Team(), oppTeam = Team.Team(), notes = "", Leads = Leads.Leads()):
         """
         Initialize match class.
 
@@ -62,17 +63,17 @@ class Match:
         paste += str(self.oppTeam)+ "\n-teamend-\n\n"
         #
         paste += "\nYour Lead: "
-        for lead in self.leads.yourLead:
-            paste += str(lead)+ "; "
+        for lead1 in self.leads.yourLead:
+            paste += str(lead1)+ "; "
         paste += "\nYour Back: "
-        for back in self.leads.yourBack:
-            paste += str(back)+ "; "
+        for back1 in self.leads.yourBack:
+            paste += str(back1)+ "; "
         paste += "\nOpponents Lead: "
-        for lead in self.leads.oppLead:
-            paste += str(lead)+ "; "
+        for lead2 in self.leads.oppLead:
+            paste += str(lead2)+ "; "
         paste += "\nOpponents Back: "
-        for back in self.leads.oppBack:
-            paste += str(back)+ "; "
+        for back2 in self.leads.oppBack:
+            paste += str(back2)+ "; "
         #
         paste += "\nNotes: \n"
         paste += self.notes + "\n\n>-----<\n\n"
@@ -130,6 +131,30 @@ class Match:
                 teamOppFile = open(tempFile, 'w')
                 teamOppFile.write(removeOppTeam)
                 teamOppFile.close()
+            if(line.find("Your Lead:") != -1):
+                firstMon = line[line.find(": ")+1:line.find(";")].rstrip().lstrip()
+                match.leads.yourLead.append(firstMon)
+                if(line.find(";") != -1):
+                    secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
+                    match.leads.yourLead.append(secondMon)
+            if(line.find("Your Back:") != -1):
+                firstMon = line[line.find(": ")+1:line.find(";")].rstrip().lstrip()
+                match.leads.yourBack.append(firstMon)
+                if(line.find(";") != -1):
+                    secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
+                    match.leads.yourBack.append(secondMon)
+            if(line.find("Opponents Lead:") != -1):
+                firstMon = line[line.find(": ")+1:line.find(";")].rstrip().lstrip()
+                match.leads.oppLead.append(firstMon)
+                if(line.find(";") != -1):
+                    secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
+                    match.leads.oppLead.append(secondMon)
+            if(line.find("Opponents Back:") != -1):
+                firstMon = line[line.find(": ")+1:line.find(";")].rstrip().lstrip()
+                match.leads.oppBack.append(firstMon)
+                if(line.find(";") != -1):
+                    secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
+                    match.leads.oppBack.append(secondMon)
             if(line.find(">-----<") != -1):
                 matchList.append(match)
                 del match

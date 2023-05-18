@@ -24,6 +24,7 @@ class UserInterface:
     _LeadLog = []
     _Team = []
     _TeamName = []
+    _IsSaved = True
     curMatch = -1
     curTeam = -1
 
@@ -79,12 +80,13 @@ class UserInterface:
 
         """
         try:
-            if(len(self._MatchName) != 0):
-                response = tk.messagebox.askyesnocancel("Save Progress", "Would you like to save your current match log?", icon ='question')
-                if(response == True):
-                    self.uxSaveFile()
-                elif(response == None):
-                    return
+            if(self._IsSaved == False):
+                if(len(self._MatchName) != 0):
+                    response = tk.messagebox.askyesnocancel("Save Progress", "Would you like to save your current match log?", icon ='question')
+                    if(response == True):
+                        self.uxSaveFile()
+                    elif(response == None):
+                        return
             path = askopenfilename()
             if not path:
                 return
@@ -95,8 +97,9 @@ class UserInterface:
             self._MatchLog = matchHelp.readMatch(path)
             for match in self._MatchLog:
                 self._MatchName.append(match.name)
-                self._TeamName.append(match.teamName)
-                self._Team.append(match.team)
+                if(match.teamName not in self._TeamName):
+                    self._TeamName.append(match.teamName)
+                    self._Team.append(match.team)
             self.updateListbox(self._teamSelect, self._TeamName)
             self._teamSelect.select_set(0)
             self.updateListbox(self._matchSelect, self._MatchName)
@@ -104,6 +107,7 @@ class UserInterface:
             self._deleteMatchButton.config(state =tk.NORMAL)
             self._deleteTeamButton.config(state =tk.NORMAL)
             self._newMatchButton.config(state =tk.NORMAL)
+            self._IsSaved = True
         except Exception as e:
             tk.messagebox.showerror('Open Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
@@ -125,6 +129,7 @@ class UserInterface:
                 text2save += str(match)
             file.write(text2save)
             file.close()
+            self._IsSaved = True
         except Exception as e:
             tk.messagebox.showerror('Save Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
@@ -138,18 +143,20 @@ class UserInterface:
 
         """
         try:
-            if(len(self._MatchName) != 0):
-                response = tk.messagebox.askyesnocancel("Save Progress", "Would you like to save your current match log?", icon ='question')
-                if(response == True):
-                    self.uxSaveFile()
-                elif(response == None):
-                    return
+            if(self._IsSaved == False):
+                if(len(self._MatchName) != 0):
+                    response = tk.messagebox.askyesnocancel("Save Progress", "Would you like to save your current match log?", icon ='question')
+                    if(response == True):
+                        self.uxSaveFile()
+                    elif(response == None):
+                        return
             self._MatchLog = []
             self._MatchName = []
             self._Team = []
             self._TeamName = []
             self.updateListbox(self._matchSelect, self._MatchName)
             self.updateListbox(self._teamSelect, self._TeamName)
+            self._IsSaved = True
         except Exception as e:
             tk.messagebox.showerror('New Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
@@ -514,6 +521,7 @@ class UserInterface:
                 self.displayPokePaste(self._pasteFrame, self._Team[-1])
                 self._deleteTeamButton.config(state =tk.NORMAL)
                 self._newMatchButton.config(state =tk.NORMAL)
+                self._IsSaved = False
                 window.destroy()
             except Exception as e:
                 tk.messagebox.showerror('PokePaste Error', 'Error: There is an error with your paste. \nError Code: ' + str(e))
@@ -581,6 +589,7 @@ class UserInterface:
                 self.updateListbox(self._teamSelect, self._TeamName)
                 if(self._TeamName == []):
                     self._deleteTeamButton.config(state =tk.DISABLED)
+                self._IsSaved = False
                 window.destroy()
             except Exception as e:
                 tk.messagebox.showerror('Delete Team Error', 'Error: There was an error deleting your team. \nError Code: ' + str(e))
@@ -628,10 +637,11 @@ class UserInterface:
         newWindow.rowconfigure(1, weight = 2)
         newWindow.rowconfigure(2, weight = 2)
         newWindow.rowconfigure(3, weight = 2)
+        newWindow.rowconfigure(4, weight = 2)
 
         ## Adds listbox to select team
         teamFrame = tk.Frame(newWindow)
-        teamFrame.grid(row = 0, column = 0)
+        teamFrame.grid(row = 2, column = 0)
         tk.Label(teamFrame, text ="Team Used:").pack()
         teamBox = tk.Listbox(teamFrame)
         teamBox.pack(side = 'left',fill = 'y' )
@@ -642,9 +652,36 @@ class UserInterface:
         teamBox.config(yscrollcommand = scrollbar.set)
         scrollbar.config(command = teamBox.yview)
 
+        ## Adds frame to input leads and back
+        leadsFrame = tk.Frame(newWindow)
+        leadsFrame.grid(row = 1, column = 0)
+        tk.Label(leadsFrame, text = "Your Lead:").pack()
+        yourLead1 = tk.Entry(leadsFrame, width = 20)
+        yourLead2 = tk.Entry(leadsFrame, width = 20)
+        yourLead1.pack()
+        yourLead2.pack()
+        tk.Label(leadsFrame, text = "Your Back:").pack()
+        yourBack1 = tk.Entry(leadsFrame, width = 20)
+        yourBack2 = tk.Entry(leadsFrame, width = 20)
+        yourBack1.pack()
+        yourBack2.pack()
+
+        tk.Label(leadsFrame, text = "Opponent's Lead:").pack()
+        oppLead1 = tk.Entry(leadsFrame, width = 20)
+        oppLead2 = tk.Entry(leadsFrame, width = 20)
+        oppLead1.pack()
+        oppLead2.pack()
+        tk.Label(leadsFrame, text = "Opponent's Back:").pack()
+        oppBack1 = tk.Entry(leadsFrame, width = 20)
+        oppBack2 = tk.Entry(leadsFrame, width = 20)
+        oppBack1.pack()
+        oppBack2.pack()
+
+        leads = [yourLead1, yourLead2, yourBack1, yourBack2, oppLead1, oppLead2, oppBack1, oppBack2]
+
         ## Adds textbox to select opponents team
         oppTeamFrame = tk.Frame(newWindow)
-        oppTeamFrame.grid(row = 0, column = 1, rowspan = 1)
+        oppTeamFrame.grid(row = 0, column = 1, rowspan = 2)
         tk.Label(oppTeamFrame, text ="Opponents Team:").pack()
         PokePaste = tk.Text(oppTeamFrame)
         PokePaste.pack(side = 'left',fill = 'y' )
@@ -670,20 +707,19 @@ class UserInterface:
 
         # Adds box to input match name
         nameFrame = tk.Frame(newWindow)
-        nameFrame.grid(row = 1, column =0)
+        nameFrame.grid(row = 0, column =0)
         tk.Label(nameFrame, text ="Match Name:").pack()
         MatchName = tk.Entry(nameFrame, width = 20)
         MatchName.insert(0, "Match "+str(len(self._MatchLog)+1))
         MatchName.pack(side = 'left',fill = 'y' )
 
-
         # Adds a button to add match
         buttonFrame = tk.Frame(newWindow)
-        buttonFrame.grid(row = 4, column = 1)
-        addTeam_button = tk.Button(buttonFrame, text='Add Match', command = lambda : self.newMatch(newWindow, teamBox, PokePaste, notes, MatchName))
-        addTeam_button.pack(side = "bottom", fill = "y")
+        buttonFrame.grid(row = 5, column = 1)
+        addTeam_button = tk.Button(buttonFrame, text='Add Match', command = lambda : self.newMatch(newWindow, teamBox, PokePaste, notes, MatchName, leads))
+        addTeam_button.pack(fill = "y")
 
-    def newMatch(self, window, teamSelect, oppTeamBox, notesBox, nameBox):
+    def newMatch(self, window, teamSelect, oppTeamBox, notesBox, nameBox, leadsList):
         """
         Add Match helper method.
 
@@ -699,6 +735,8 @@ class UserInterface:
             Textbox to retrieve notes.
         nameBox : entry
             Entry to get entered match name.
+        leadsList : list of entry objects
+            List of entries to retrieve leads and backs from.
 
         Returns
         -------
@@ -750,13 +788,22 @@ class UserInterface:
                 pasteFile.write("")
                 pasteFile.close()
                 notes = notesBox.get("1.0",tk.END)
-                match = Match.Match(name, teamName, team, oppTeam, notes)
-
+                leads = Leads.Leads([None, None],[None, None],[None, None],[None, None])
+                leads.yourLead[0] = leadsList[0].get().lstrip().rstrip()
+                leads.yourLead[1] = leadsList[1].get().lstrip().rstrip()
+                leads.yourBack[0] = leadsList[2].get().lstrip().rstrip()
+                leads.yourBack[1] = leadsList[3].get().lstrip().rstrip()
+                leads.oppLead[0] = leadsList[4].get().lstrip().rstrip()
+                leads.oppLead[1] =leadsList[5].get().lstrip().rstrip()
+                leads.oppBack[0] =leadsList[6].get().lstrip().rstrip()
+                leads.oppBack[1] =leadsList[7].get().lstrip().rstrip()
+                match = Match.Match(name, teamName, team, oppTeam, notes, leads)
                 self._MatchLog.append(match)
                 self._MatchName.append(match.name)
                 self.displayMatch(self._matchFrame, match)
                 self.updateListbox(self._matchSelect, self._MatchName)
                 self._deleteMatchButton.config(state =tk.NORMAL)
+                self._IsSaved = False
                 window.destroy()
             except Exception as e:
                 tk.messagebox.showerror('New Match Error', 'There was an error adding your match. \nError Code: ' + str(e))
@@ -824,6 +871,7 @@ class UserInterface:
                 self.updateListbox(self._matchSelect, self._MatchName)
                 if(self._MatchName == []):
                     self._deleteMatchButton.config(state =tk.DISABLED)
+                self._IsSaved = False
                 window.destroy()
             except Exception as e:
                 tk.messagebox.showerror('Delete Match Error', 'Error: There was an error deleting your match. \nError Code: ' + str(e))
@@ -850,6 +898,7 @@ class UserInterface:
         for widget in frame.winfo_children():
             widget.destroy()
         frame.columnconfigure(0, weight = 1)
+        frame.columnconfigure(1, weight = 1)
         frame.rowconfigure(1, weight = 1)
         frame.rowconfigure(2, weight = 1)
         frame.rowconfigure(3, weight = 12)
@@ -864,14 +913,45 @@ class UserInterface:
         tk.Label(teamUsedFrame, text = match.teamName).grid(row = 0, column = 1, sticky = "w")
         teamUsedFrame.grid(column = 0, row = 1, sticky = "w")
 
+        ## Adds Leads
+        leadsFrame = tk.Frame(frame, padx = 1, pady =1)
+        leadsFrame.columnconfigure(0, weight =1)
+        leadsFrame.columnconfigure(1, weight =1)
+        leadsFrame.columnconfigure(2, weight =1)
+        leadsFrame.columnconfigure(3, weight =1)
+        leadsFrame.rowconfigure(0, weight =1)
+        leadsFrame.rowconfigure(1, weight =1)
+        tk.Label(leadsFrame, text = "Your Leads:", font = 'Helvetica 9 bold').grid(column = 0, row = 0, sticky = "n")
+        tk.Label(leadsFrame, text = "Opponent's Leads:", font = 'Helvetica 9 bold').grid(column = 0, row = 1, sticky = "n")
+        tk.Label(leadsFrame, text = "Your Back:", font = 'Helvetica 9 bold').grid(column = 2, row = 0, sticky = "n")
+        tk.Label(leadsFrame, text = "Opponent's Back:", font = 'Helvetica 9 bold').grid(column = 2, row = 1, sticky = "n")
+        yourLeadsFrame = tk.Frame(leadsFrame)
+        yourLeadsFrame.grid(column = 1, row = 0)
+        tk.Label(yourLeadsFrame, text = match.leads.yourLead[0]).pack()
+        tk.Label(yourLeadsFrame, text = match.leads.yourLead[1]).pack()
+        yourBackFrame = tk.Frame(leadsFrame)
+        yourBackFrame.grid(column = 3, row = 0)
+        tk.Label(yourBackFrame, text = match.leads.yourBack[0]).pack()
+        tk.Label(yourBackFrame, text = match.leads.yourBack[1]).pack()
+        oppLeadsFrame = tk.Frame(leadsFrame)
+        oppLeadsFrame.grid(column = 1, row = 1)
+        tk.Label(oppLeadsFrame, text = match.leads.oppLead[0]).pack()
+        tk.Label(oppLeadsFrame, text = match.leads.oppLead[1]).pack()
+        oppBackFrame = tk.Frame(leadsFrame)
+        oppBackFrame.grid(column = 3, row = 1)
+        tk.Label(oppBackFrame, text = match.leads.oppBack[0]).pack()
+        tk.Label(oppBackFrame, text = match.leads.oppBack[1]).pack()
+
+        leadsFrame.grid(column = 1, row = 1)
+
         tk.Label(frame, text = "Opponent's Team:", font = 'Helvetica 9 bold').grid(column = 0, row = 2, sticky = "w")
 
         oppTeamFrame = tk.Frame(frame)
         self.displayPokePaste(oppTeamFrame, match.oppTeam)
-        oppTeamFrame.grid(column = 0, row = 3)
+        oppTeamFrame.grid(column = 0, row = 3, columnspan = 2)
 
         notesFrame = tk.Frame(frame, pady=5, padx = 5)
-        notesFrame.grid(column = 0, row = 4)
+        notesFrame.grid(column = 0, row = 4, columnspan = 2)
 
         notesFrame.rowconfigure(0, weight = 1)
         notesFrame.rowconfigure(1, weight = 4)
@@ -882,7 +962,7 @@ class UserInterface:
         tk.Label(notesFrame, text = "Notes:", font = 'Helvetica 9 bold').grid(row = 0, column = 0, sticky = "w")
 
         scrollbar = tk.Scrollbar(notesFrame)
-        scrollbar.grid(column =1, row = 1, sticky = "ns")
+        scrollbar.grid(column =1, row = 1, sticky = "nsew")
         notes = tk.Text(notesFrame, height = 5, width = 55)
         notes.grid(row = 1, column = 0, sticky = "w")
 
@@ -915,7 +995,7 @@ class UserInterface:
             self.curMatch = matchName
 
     def onClose(self, window):
-        if(len(self._MatchName) != 0):
+        if(len(self._MatchName) != 0 and self._IsSaved == False):
             response = tk.messagebox.askyesnocancel("Save Progress", "Would you like to save your current match log?", icon ='question')
             if(response == True):
                 self.uxSaveFile()

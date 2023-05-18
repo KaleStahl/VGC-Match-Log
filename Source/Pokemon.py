@@ -4,12 +4,12 @@ Pokemon.py.
 Pokemon class to create a pokemon with Pokepaste data.
 
 Author: Kale Stahl
-Last Modified: 4/13/2023
+Last Modified: 5/17/2023
 """
 class Pokemon:
     """Pokemon class."""
 
-    def __init__(self, name, nickname, gender, tera, ivs, evs, nature, ability, item, moves):
+    def __init__(self, name ="", nickname = "", gender = "", tera = "", ivs =[], evs=[], nature="", ability="", item="", moves=[]):
         """
         Intialize the Pokemon class.
 
