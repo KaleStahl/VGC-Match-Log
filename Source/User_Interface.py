@@ -641,7 +641,7 @@ class UserInterface:
 
         ## Adds listbox to select team
         teamFrame = tk.Frame(newWindow)
-        teamFrame.grid(row = 2, column = 0)
+        teamFrame.grid(row = 3, column = 0, rowspan = 2, sticky = "s")
         tk.Label(teamFrame, text ="Team Used:").pack()
         teamBox = tk.Listbox(teamFrame)
         teamBox.pack(side = 'left',fill = 'y' )
@@ -654,7 +654,7 @@ class UserInterface:
 
         ## Adds frame to input leads and back
         leadsFrame = tk.Frame(newWindow)
-        leadsFrame.grid(row = 1, column = 0)
+        leadsFrame.grid(row = 1, column = 0, sticky = "n", rowspan = 3)
         tk.Label(leadsFrame, text = "Your Lead:").pack()
         yourLead1 = tk.Entry(leadsFrame, width = 20)
         yourLead2 = tk.Entry(leadsFrame, width = 20)
@@ -681,7 +681,7 @@ class UserInterface:
 
         ## Adds textbox to select opponents team
         oppTeamFrame = tk.Frame(newWindow)
-        oppTeamFrame.grid(row = 0, column = 1, rowspan = 2)
+        oppTeamFrame.grid(row = 0, column = 1, rowspan = 3)
         tk.Label(oppTeamFrame, text ="Opponents Team:").pack()
         PokePaste = tk.Text(oppTeamFrame)
         PokePaste.pack(side = 'left',fill = 'y' )
@@ -693,7 +693,7 @@ class UserInterface:
 
         ## Adds textbox to add Notes
         notesFrame = tk.Frame(newWindow)
-        notesFrame.grid(row = 1, column = 1, rowspan = 2)
+        notesFrame.grid(row = 3, column = 1, rowspan = 2)
         tk.Label(notesFrame, text ="Notes:").pack()
 
         notes = tk.Text(notesFrame)
