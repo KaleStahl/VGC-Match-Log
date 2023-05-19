@@ -104,5 +104,5 @@ class Pokemon:
             paste += "{} Nature\n".format(self.nature)
         if(self.moves != [] and self.moves != None):
             for move in self.moves:
-                paste += "- {}\n".format(move)
+                paste += "- {}\n".format(move.lstrip().rstrip())
         return paste

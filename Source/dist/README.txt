@@ -5,7 +5,7 @@ VGC Team Logger is a Python application for tracking matches and teams used in t
 
 ----- Installation -----
 
-To istall this program, download "VGC-Match-Log.zip" and extract it to the location of your choice. Once extracted, locate the "VGC-Match-log.exe" and run it. Be careful not to move the .exe file without first copying the folders "temp_files", "items", "sprites", and "tera_types" to the new location. The .exe can run without all folders, but without "temp_files" it cannot open or save teams and without the other files it cannot display images.
+To install this program, download "VGC-Match-Log.zip" and extract it to the location of your choice. Once extracted, locate the "VGC-Match-log.exe" and run it. Be careful not to move the .exe file without first copying the folders "temp_files", "items", "sprites", and "tera_types" to the new location. The .exe can run without all folders, but without "temp_files" it cannot open or save teams and without the other files it cannot display images.
 
 ----- Usage -----
 
@@ -15,25 +15,24 @@ To use this program, simply execute the .exe file and the GUI will begin. Specif
 
 -- File --
 
-- New Team Log -
+- New Match Log -
 Clears current team log and makes a new blank team log. This will delete all of your current teams and matches. If you have any open matches, it will first prompt to save.
-- Open Team Log -
+- Open Match Log -
 Opens a previously saved team log. This program can only open files created by this program. If you have any open matches, it will first prompt to save.
-- Save Team Log -
+- Save Match Log -
 Saves your current team log as a specially formatted .txt file. This text file can be read by this application, but not Showdown.
 - Exit -
 Closes the application.
 
--- PokePaste -- 
+-- PokePaste --
 
-- Generate PokePaste - 
-Opens a window that allows you to enter Pokemon data. "Generate" button will generate a PokePaste readable by
-both this program and Showdown.
+- Generate PokePaste -
+Opens a window that allows you to enter Pokemon data. "Generate" button will generate a PokePaste readable by both this program and Showdown. Note that because I am bad at programming, once you hit generate, it will not allow you to generate another pokepaste without closing and restarting the generate pokepaste window.
 - Export Teams -
-Opens a window with a text paste of all teams entered through the "add team" button. This paste will be 
+Opens a window with a text paste of all teams entered through the "add team" button. This paste will be
 readable by Showdown, but not this application.
 - Export Opponent's Teams -
-Opens a window with a text paste of all opponent's teams entered through the "new match" button. 
+Opens a window with a text paste of all opponent's teams entered through the "new match" button.
 This paste will be readable by Showdown, but not this application.
 
 -- Help --
@@ -54,13 +53,13 @@ Adds a new team to the listbox. Enter you team name in the box "Team Name".Note 
 - Delete Team Button -
 Deletes a team from the listbox. After clicking the button, select the team you wish to delete and click "delete".That team will no longer appear in the listbox, though if it was currently displayed it will not go away until another team is selected.
 
--- Match Pane -- 
+-- Match Pane --
 
 The team pane holds all information about the matches you have entered.
 - Match Select -
 Holds all currently stored matches. To display a match, click on its name in the listbox labeled "Current Match". If you click a team not currently displayed, it will automatically display its PokePaste with images to the left, along with the name of the team used and any notes.
-- New Match Button - 
-Adds a new match to the listbox. Enter the name of your match in the box "Match Name". Note it must be different that previous match names. Then select the team used in the match from the "Team Used" listbox to the right. You can enter the Opponents team PokePaste into the "Opponents Team" box and enter any notes into the "Notes" box. Note that you must select a team used, the opponents team, and a match name. Notes are optional. The match name will now appear in the listbox and you can display the match by clicking on the name.
+- New Match Button -
+Adds a new match to the listbox. Enter the name of your match in the box "Match Name". Note it must be different that previous match names. Then select the team used in the match from the "Team Used" listbox to the right. You can enter the Opponents team PokePaste into the "Opponents Team" box and enter any notes into the "Notes" box. You can also enter the two pokemon you led wuth in "Your leads" your pokemon in the back in "Your Back" and the same for your opponent. Note that you must select a team used, the opponents team, and a match name. Notes and lead information are optional. The match name will now appear in the listbox and you can display the match by clicking on the name.
 - Delete Match Button -
 Deletes a match from the listbox. After clicking the button, select the match you wish to delete and click "delete". That match will no longer appear in the listbox, though if it was currently displayed it will not go away until another match is selected.
 

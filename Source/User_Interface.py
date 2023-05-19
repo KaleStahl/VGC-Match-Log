@@ -21,7 +21,6 @@ class UserInterface:
 
     _MatchLog = []
     _MatchName = []
-    _LeadLog = []
     _Team = []
     _TeamName = []
     _IsSaved = True
@@ -87,7 +86,7 @@ class UserInterface:
                         self.uxSaveFile()
                     elif(response == None):
                         return
-            path = askopenfilename()
+            path = askopenfilename(title = "Open Match Log")
             if not path:
                 return
             matchHelp = Match.Match(None, None, None, None, None)
@@ -108,6 +107,8 @@ class UserInterface:
             self._deleteTeamButton.config(state =tk.NORMAL)
             self._newMatchButton.config(state =tk.NORMAL)
             self._IsSaved = True
+            for i in self._MatchLog:
+                print(str(i)+"\n")
         except Exception as e:
             tk.messagebox.showerror('Open Team Log Error', 'Error: An error occurred. \nError Code: ' + str(e))
 
@@ -121,7 +122,7 @@ class UserInterface:
 
         """
         try:
-            file = asksaveasfile(title="Select Location", filetypes=(("Text Files", "*.txt"),))
+            file = asksaveasfile(initialfile = 'Untitled Match Log.txt',defaultextension=".txt",filetypes=[("Text Documents","*.txt")], title = "Save Match Log")
             if not file:
                 return
             text2save = ""
@@ -406,9 +407,9 @@ class UserInterface:
 
         # Create file meny bar
         self._fileMenu = tk.Menu(self._menuBar, tearoff=0)
-        self._fileMenu.add_command(label="New Team Log", command=self.uxNewFile)
-        self._fileMenu.add_command(label="Open Team Log", command=self.uxOpenFile)
-        self._fileMenu.add_command(label="Save Team Log", command=self.uxSaveFile)
+        self._fileMenu.add_command(label="New Match Log", command=self.uxNewFile)
+        self._fileMenu.add_command(label="Open Match Log", command=self.uxOpenFile)
+        self._fileMenu.add_command(label="Save Match Log", command=self.uxSaveFile)
         self._fileMenu.add_separator()
         self._fileMenu.add_command(label="Exit", command=root.destroy)
         self._menuBar.add_cascade(label="File", menu=self._fileMenu)
@@ -1240,7 +1241,7 @@ class UserInterface:
                     itemLab = tk.Label(pokeframe, image = imgItem)
                     itemLab.image = imgItem
                 else:
-                    itemLab = tk.Label(pokeframe, text = "[No Image]")
+                    itemLab = tk.Label(pokeframe, text = "")
                 itemLab.grid(row = 2, column = 0)
 
                 #add tera image
@@ -1253,7 +1254,7 @@ class UserInterface:
                     teraLab = tk.Label(pokeframe, image = imgTera)
                     teraLab.image = imgTera
                 else:
-                    teraLab = tk.Label(pokeframe, text = "[No Image]")
+                    teraLab = tk.Label(pokeframe, text = "")
                 teraLab.grid(row = 1, column = 0, sticky = tk.E)
 
             else:

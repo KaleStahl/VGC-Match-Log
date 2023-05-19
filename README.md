@@ -3,7 +3,7 @@
 VGC Team Logger is a Python application for tracking matches and teams used in those matches in a clear and concise manner. These matches can be saved and loaded, and teams are copied from Showdown for ease of use.
 
 ## Installation
-To istall this program, download "VGC-Match-Log.zip" and extract it to the location of your choice. Once extracted, locate the "VGC-Match-log.exe" and run it. Be careful not to move the .exe file without first copying the folders "temp_files", "items", "sprites", and "tera_types" to the new location. The exe can run without all folders, but without "temp_files" it cannot open or save teams and without the other files it cannot display images.
+To install this program, download "VGC-Match-Log.zip" and extract it to the location of your choice. Once extracted, locate the "VGC-Match-log.exe" and run it. Be careful not to move the .exe file without first copying the folders "temp_files", "items", "sprites", and "tera_types" to the new location. The exe can run without all folders, but without "temp_files" it cannot open or save teams and without the other files it cannot display images.
 
 ## Usage
 
@@ -11,11 +11,11 @@ To use this program, simply execute the .exe file and the GUI will begin. Specif
 
 ### Menu Bar
 #### File
-##### New Team Log
+##### New Match Log
 Clears current team log and makes a new blank team log. This will delete all of your current teams and matches. If you have any open matches, it will first prompt to save.
-##### Open Team Log
+##### Open Match Log
 Opens a previously saved team log. This program can only open files created by this program. If you have any open matches, it will first prompt to save.
-##### Save Team Log
+##### Save Match Log
 Saves your current team log as a specially formatted .txt file.
 This text file can be read by this application, but not Showdown.
 ##### Exit
@@ -23,7 +23,7 @@ Closes the application.
 
 #### PokePaste
 ##### Generate PokePaste
-Opens a window that allows you to enter Pokemon data. "Generate" button will generate a PokePaste readable by both this program and Showdown.
+Opens a window that allows you to enter Pokemon data. "Generate" button will generate a PokePaste readable by both this program and Showdown. Note that because I am bad at programming, once you hit generate, it will not allow you to generate another pokepaste without closing and restarting the generate pokepaste window.
 ##### Export Teams
 Opens a window with a text paste of all teams entered through the "add team" button. This paste will be readable by Showdown, but not this application.
 ##### Export Opponent's Teams

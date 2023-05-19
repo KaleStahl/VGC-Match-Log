@@ -95,7 +95,7 @@ class Match:
 
         """
         matchList = []
-        match = Match("", "", None, None, "")
+        match = Match()
 
         # Copies match data to new file
         tempFile = 'temp_files/temp_match_list.txt'
@@ -134,31 +134,27 @@ class Match:
             if(line.find("Your Lead:") != -1):
                 firstMon = line[line.find(": ")+1:line.find(";")].rstrip().lstrip()
                 match.leads.yourLead.append(firstMon)
-                if(line.find(";") != -1):
-                    secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
-                    match.leads.yourLead.append(secondMon)
+                secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
+                match.leads.yourLead.append(secondMon)
             if(line.find("Your Back:") != -1):
                 firstMon = line[line.find(": ")+1:line.find(";")].rstrip().lstrip()
                 match.leads.yourBack.append(firstMon)
-                if(line.find(";") != -1):
-                    secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
-                    match.leads.yourBack.append(secondMon)
+                secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
+                match.leads.yourBack.append(secondMon)
             if(line.find("Opponents Lead:") != -1):
                 firstMon = line[line.find(": ")+1:line.find(";")].rstrip().lstrip()
                 match.leads.oppLead.append(firstMon)
-                if(line.find(";") != -1):
-                    secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
-                    match.leads.oppLead.append(secondMon)
+                secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
+                match.leads.oppLead.append(secondMon)
             if(line.find("Opponents Back:") != -1):
                 firstMon = line[line.find(": ")+1:line.find(";")].rstrip().lstrip()
                 match.leads.oppBack.append(firstMon)
-                if(line.find(";") != -1):
-                    secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
-                    match.leads.oppBack.append(secondMon)
+                secondMon = line[line.find(";")+1:line.find(";", line.find(";")+1)].rstrip().lstrip()
+                match.leads.oppBack.append(secondMon)
             if(line.find(">-----<") != -1):
                 matchList.append(match)
                 del match
-                match = Match("", "", None, None, "")
+                match = Match()
                 notesBlock = False
             if(notesBlock == True):
                 match.notes += line

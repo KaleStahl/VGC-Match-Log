@@ -4,7 +4,7 @@ Parser.py.
 Parser class to extract team from Pokepaste.
 
 Author: Kale Stahl
-Last Modified: 3/9/2023
+Last Modified: 5/18/2023
 """
 
 import Pokemon
@@ -242,24 +242,30 @@ class Parser:
         IVs_Added = False
         team = []
         cur_poke = Pokemon.Pokemon("","", "","", [], [], "","","", [])
+        prevLine = ""
         fileinput.close()
         fileIn = fileinput.input(pasteLocation)
         for line in fileIn:
             line.rstrip()
-            if(line.find("teamend-") != -1):
+            if(line.find("-teamend-") != -1):
                 break
             if(pokemon_count < 6):
-                if(line.find("(") != -1 or line.find("@") != -1):
+                if(line.find("Team Used:") != -1 or line.find("Match Name:")!= -1 or line.find("Opponents Team:")!= -1 or line.find("Team Name:")!= -1):
+                    prevLine = line
+                    continue
+                if(prevLine.lstrip().rstrip() == "" or prevLine.find("Opponents Team:")!= -1 or prevLine.find("Team Used:") != -1):
                     if(first_line):
                         cur_poke = Pokemon.Pokemon("","", "","", [], [], "","","", [])
                         first_line = False
                     else:
-                        team.append(cur_poke)
+                        if(cur_poke.name.lstrip().rstrip() != "" and cur_poke.name.rstrip().lstrip() != "-" and cur_poke.name.find("Opponents ") == -1 and cur_poke.name.find("Your ") == -1 and cur_poke.name.find(">--") == -1):
+                            team.append(cur_poke)
+                            pokemon_count += 1
                         del cur_poke
                         cur_poke = Pokemon.Pokemon("","", "", "", [], [], "","","", [])
-                        pokemon_count += 1
                         IVs_Added = False
                     cur_poke.name = self.getName(line)
+                if(line.find("(") != -1 or line.find("@") != -1):
                     if(line.count("(") > 1):
                         cur_poke.gender = line[line.find("(",line.find("(")+1)+1: line.find(")", line.find(")")+1)]
                         cur_poke.nickname = self.getNickname(line)
@@ -273,7 +279,7 @@ class Parser:
                     else:
                         cur_poke.gender = None
                         cur_poke.nickname = None
-                    cur_poke.item = self.getItem(line)
+                        cur_poke.item = self.getItem(line)
                 if(line.find("Ability: ") != -1):
                     cur_poke.ability = self.getAbility(line)
                 if(line.find("Tera Type: ") != -1):
@@ -289,10 +295,10 @@ class Parser:
                     cur_poke.moves.append(self.getMove(line))
                 if(line.find(" Nature") != -1):
                     cur_poke.nature = self.getNature(line)
+                prevLine = line
             else:
                 team.append(cur_poke)
                 break
         team.append(cur_poke)
         fileIn.close()
-        # print(self.makeTeam(team))
         return self.makeTeam(team)
